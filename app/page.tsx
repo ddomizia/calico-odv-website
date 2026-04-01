@@ -1,65 +1,290 @@
-import Image from "next/image";
+import Image from 'next/image'
+import Link from 'next/link'
+import StatsStrip from '@/components/home/StatsStrip'
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <main className="min-h-screen bg-[#FCFBF8]">
+      <section className="relative min-h-[560px] overflow-hidden">
         <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
+          src="/home-hero.jpg"
+          alt="Associazione Calico ODV"
+          fill
           priority
+          className="object-cover"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+        <div className="absolute inset-0 bg-black/50" />
+
+        <div className="relative z-10 mx-auto flex min-h-[560px] max-w-7xl items-center px-6 py-16">
+          <div className="max-w-3xl">
+            <h1 className="text-5xl font-black uppercase leading-none tracking-tight md:text-7xl">
+              <span className="text-white">Associazione </span>
+              <span className="text-[#E4B15A]">Calico</span>{' '}
+              <span className="text-white">ODV</span>
+            </h1>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[1fr_0.95fr] lg:items-center">
+        <div>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-[#E4B15A]">
+            Associazione Calico ODV
           </p>
+
+          <h2 className="text-4xl font-black uppercase tracking-tight text-black md:text-5xl">
+            Chi siamo
+          </h2>
+
+          <div className="mt-4 h-2 w-28 bg-[#E4B15A]" />
+
+          <div className="mt-8 space-y-4 text-[15px] leading-7 text-gray-700 md:text-base">
+            <p>
+L’Associazione Calico odv è costituita da un gruppo di volontari attivi su tutto il territorio del Lazio. Il nostro obiettivo? Non lasciare solo nessun animale bisognoso. A Nepi, in provincia di Viterbo abbiamo ceeato la Gatteria, un piccolo rifugio dove accogliamo gatti abbandonati e gli troviamo una famiglia. A Roma ci occupiamo dei gatti ospitati presso ValleGrande.Vigiliamo sul loro benessere e promuoviamo le adozioni di gatti e cani ospiti della struttura.             </p>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+
+        <div className="relative min-h-[420px] bg-[#F3E6CC]">
+          <Image
+            src="/chi-siamo.jpg"
+            alt="Volontari Associazione Calico ODV"
+            fill
+            className="object-cover"
+          />
+        </div>
+      </section>
+
+      <section className="w-full bg-[#1F3B2D]">
+        <div className="mx-auto grid max-w-7xl min-h-[220px] gap-8 px-6 text-white md:grid-cols-[1fr_260px_1fr] md:items-stretch">
+          <div className="flex flex-col justify-center py-10">
+            <p className="text-3xl font-black uppercase leading-tight md:text-4xl">
+              Dona il 5x1000
+            </p>
+            <p className="mt-2 text-lg font-bold uppercase tracking-wide text-[#E4B15A]">
+              all&apos;Associazione Calico
+            </p>
+          </div>
+
+          <div className="relative h-full min-h-[220px]">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src="/logo-calico.png"
+              alt="Logo Associazione Calico ODV"
+              fill
+              className="object-contain object-center"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+
+          <div className="flex flex-col justify-center py-10 text-left md:text-right">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#E4B15A]">
+              Codice fiscale
+            </p>
+            <p className="mt-2 text-2xl font-black tracking-wide md:text-3xl">
+              90129990561
+            </p>
+
+            <div className="mt-5">
+              <Link
+                href="/sostienici"
+                className="inline-flex border border-[#E4B15A] bg-[#E4B15A] px-5 py-3 text-sm font-bold uppercase tracking-wide text-black transition hover:bg-transparent hover:text-white md:self-end"
+              >
+                Scopri di più
+              </Link>
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
-  );
+      </section>
+
+      <StatsStrip />
+
+      <section className="w-full bg-[#FCFBF8] py-16">
+        <div className="space-y-0">
+          <div className="grid min-h-[420px] grid-cols-1 md:grid-cols-2">
+            <div className="relative min-h-[320px]">
+              <Image
+                src="/gatto-1.jpg"
+                alt="Adozione gatti"
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            <div className="flex flex-col justify-center bg-[#E4B15A] p-10 text-black md:p-14">
+              <h3 className="text-3xl font-bold leading-tight md:text-4xl">
+                Vuoi adottare un gatto?
+              </h3>
+
+              <p className="mt-5 max-w-xl text-sm leading-6 md:text-[15px]">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+                habitant morbi tristique senectus et netus et malesuada fames ac
+                turpis egestas. Integer convallis est sed fermentum malesuada.
+                Sed viverra nunc id sem feugiat.
+              </p>
+
+              <div className="mt-6">
+                <Link
+                  href="/adozioni"
+                  className="inline-flex bg-black px-5 py-3 text-sm font-bold text-white transition hover:opacity-85"
+                >
+                  Scopri di più
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid min-h-[420px] grid-cols-1 md:grid-cols-2">
+            <div className="flex flex-col justify-center bg-[#1F3B2D] p-10 text-white md:order-1 md:p-14">
+              <h3 className="text-3xl font-bold leading-tight md:text-4xl">
+                Diventa una/o volontaria/o
+              </h3>
+
+              <p className="mt-5 max-w-xl text-sm leading-6 text-white/90 md:text-[15px]">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+                posuere sapien nec luctus tincidunt. Curabitur non augue sed lacus
+                varius fermentum. Sed viverra nunc id sem feugiat.
+              </p>
+
+              <div className="mt-6">
+                <Link
+                  href="/diventa-volontario"
+                  className="inline-flex bg-[#E4B15A] px-5 py-3 text-sm font-bold text-black transition hover:opacity-85"
+                >
+                  Scopri di più
+                </Link>
+              </div>
+            </div>
+
+            <div className="relative min-h-[320px] md:order-2">
+              <Image
+                src="/gatto-2.jpg"
+                alt="Volontariato con i gatti"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+
+          <div className="grid min-h-[420px] grid-cols-1 md:grid-cols-2">
+            <div className="relative min-h-[320px]">
+              <Image
+                src="/gatto-3.jpg"
+                alt="Sostegno all'associazione"
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            <div className="flex flex-col justify-center bg-[#C96B3C] p-10 text-white md:p-14">
+              <h3 className="text-3xl font-bold leading-tight md:text-4xl">
+                Vuoi sostenerci? Scopri come puoi aiutarci
+              </h3>
+
+              <p className="mt-5 max-w-xl text-sm leading-6 text-white/90 md:text-[15px]">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+                posuere sapien nec luctus tincidunt. Curabitur non augue sed lacus
+                varius. Donec tincidunt lectus et tempor dignissim.
+              </p>
+
+              <div className="mt-6">
+                <Link
+                  href="/sostienici"
+                  className="inline-flex bg-white px-5 py-3 text-sm font-bold text-[#C96B3C] transition hover:opacity-85"
+                >
+                  Scopri di più
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid min-h-[420px] grid-cols-1 md:grid-cols-2">
+            <div className="flex flex-col justify-center bg-[#F3E6CC] p-10 text-black md:order-1 md:p-14">
+              <h3 className="text-3xl font-bold leading-tight md:text-4xl">
+                I nostri consigli
+              </h3>
+
+              <p className="mt-5 max-w-xl text-sm leading-6 text-black/80 md:text-[15px]">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+                habitant morbi tristique senectus et netus et malesuada fames ac
+                turpis egestas. Donec tincidunt lectus et tempor dignissim.
+              </p>
+
+              <div className="mt-6">
+                <Link
+                  href="/consigli"
+                  className="inline-flex bg-black px-5 py-3 text-sm font-bold text-white transition hover:opacity-85"
+                >
+                  Scopri di più
+                </Link>
+              </div>
+            </div>
+
+            <div className="relative min-h-[320px] md:order-2">
+              <Image
+                src="/gatto-4.jpg"
+                alt="Consigli sui gatti"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="w-full bg-[#1F3B2D] py-16 text-white">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-2 items-center">
+          <div>
+            <h2 className="text-4xl font-black uppercase tracking-tight">
+              Contattaci
+            </h2>
+
+            <div className="mt-4 h-2 w-28 bg-[#E4B15A]" />
+
+            <p className="mt-6 text-sm leading-7 text-white/90 max-w-md">
+              Hai domande su un gatto? Vuoi adottare o darci una mano? Scrivici, ti risponderemo il prima possibile.
+            </p>
+
+            <div className="mt-8 space-y-3 text-sm">
+              <p><span className="font-bold">Email:</span> info@calicoodv.it</p>
+              <p><span className="font-bold">Telefono:</span> +39 000 0000000</p>
+              <p><span className="font-bold">Instagram:</span> @calicoodv</p>
+              <p><span className="font-bold">Facebook:</span> Associazione Calico ODV</p>
+            </div>
+          </div>
+
+          <div className="bg-white p-8 text-black">
+            <h3 className="mb-4 text-2xl font-bold">
+              Scrivici un messaggio
+            </h3>
+
+            <form className="space-y-4">
+              <input
+                type="text"
+                placeholder="Nome"
+                className="w-full border border-gray-300 px-4 py-3 text-sm"
+              />
+
+              <input
+                type="email"
+                placeholder="Email"
+                className="w-full border border-gray-300 px-4 py-3 text-sm"
+              />
+
+              <textarea
+                placeholder="Messaggio"
+                rows={4}
+                className="w-full border border-gray-300 px-4 py-3 text-sm"
+              />
+
+              <button
+                type="submit"
+                className="bg-[#E4B15A] px-5 py-3 text-sm font-bold text-black hover:opacity-90"
+              >
+                Invia messaggio
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+  )
 }
