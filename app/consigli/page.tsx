@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -5,15 +8,321 @@ import {
   Bath,
   Cat,
   DoorClosed,
+  HeartHandshake,
   Home,
-  ShieldAlert,
   ShoppingBag,
+  ShieldAlert,
   Syringe,
   Wind,
-  HeartHandshake,
+  X,
+  PawPrint,
+  Heart,
+  Users,
+  Smile,
 } from 'lucide-react'
 
+type AdviceCard = {
+  id: string
+  title: string
+  subtitle: string
+  icon: React.ElementType
+  accent: string
+  content: React.ReactNode
+}
+
+function TopicCard({
+  title,
+  subtitle,
+  icon: Icon,
+  accent,
+  onClick,
+}: {
+  title: string
+  subtitle: string
+  icon: React.ElementType
+  accent: string
+  onClick: () => void
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="group flex h-full flex-col justify-between border border-black/10 bg-white p-6 text-left transition duration-200 hover:-translate-y-1 hover:shadow-xl"
+    >
+      <div>
+        <div
+          className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full"
+          style={{ backgroundColor: accent }}
+        >
+          <Icon size={22} className="text-black" />
+        </div>
+
+        <h3 className="text-2xl font-black uppercase leading-tight text-black">
+          {title}
+        </h3>
+
+        <p className="mt-3 text-sm leading-6 text-gray-700">{subtitle}</p>
+      </div>
+
+      <span className="mt-8 inline-flex text-sm font-bold uppercase tracking-wide text-[#1F3B2D]">
+        Apri la scheda
+      </span>
+    </button>
+  )
+}
+
+function AdviceBlock({
+  icon: Icon,
+  title,
+  children,
+}: {
+  icon: React.ElementType
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="border border-black/10 bg-[#FCFBF8] p-4">
+      <div className="flex items-start gap-3">
+        <div className="mt-0.5 shrink-0 text-[#C96B3C]">
+          <Icon size={18} />
+        </div>
+
+        <div className="min-w-0">
+          <h4 className="text-sm font-black uppercase tracking-wide text-black">
+            {title}
+          </h4>
+
+          <div className="mt-2 space-y-2 text-xs leading-6 text-gray-700 md:text-sm">
+            {children}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function BenefitItem({
+  number,
+  title,
+  text,
+  icon: Icon,
+}: {
+  number: string
+  title: string
+  text: string
+  icon: React.ElementType
+}) {
+  return (
+    <div className="border border-black/10 bg-[#FCFBF8] p-4">
+      <div className="flex items-start gap-3">
+        <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E4B15A] text-black">
+          <Icon size={16} />
+        </div>
+
+        <div>
+          <h4 className="text-sm font-black text-black">
+            {number}. {title}
+          </h4>
+          <p className="mt-2 text-xs leading-6 text-gray-700 md:text-sm">{text}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function Modal({
+  open,
+  onClose,
+  title,
+  children,
+}: {
+  open: boolean
+  onClose: () => void
+  title: string
+  children: React.ReactNode
+}) {
+  if (!open) return null
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-6">
+      <div className="relative max-h-[90vh] w-full max-w-5xl overflow-hidden border border-black/10 bg-white shadow-2xl">
+        <div className="flex items-center justify-between border-b border-black/10 bg-[#FCFBF8] px-5 py-4 md:px-6">
+          <h3 className="pr-4 text-xl font-black uppercase leading-tight text-black md:text-2xl">
+            {title}
+          </h3>
+
+          <button
+            onClick={onClose}
+            aria-label="Chiudi"
+            className="inline-flex h-10 w-10 items-center justify-center border border-black/10 bg-white text-black transition hover:bg-black hover:text-white"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        <div className="max-h-[calc(90vh-72px)] overflow-y-auto px-5 py-5 md:px-6 md:py-6">
+          {children}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function ConsigliPage() {
+  const [openCard, setOpenCard] = useState<string | null>(null)
+
+  const cards: AdviceCard[] = [
+    {
+      id: 'adozione',
+      title: 'I nostri consigli per la tua adozione',
+      subtitle:
+        'Indicazioni pratiche per il viaggio, i primi giorni in casa, l’inserimento con altri gatti, i pericoli domestici e le cose da evitare.',
+      icon: HeartHandshake,
+      accent: '#E4B15A',
+      content: (
+        <div className="space-y-4">
+          <p className="max-w-4xl text-xs leading-6 text-gray-700 md:text-sm">
+            Questi consigli nascono dall’esperienza quotidiana dell’associazione:
+            non vogliono essere una lezione, ma un aiuto concreto per rendere
+            l’arrivo del gatto più sereno e sicuro. I primi giorni contano molto:
+            anche un gatto dolce e tranquillo può essere spaventato dal cambio di
+            ambiente.
+          </p>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <AdviceBlock icon={ShoppingBag} title="Prima di partire e durante il viaggio">
+              <p>Acquista un trasportino resistente e rigido, non morbido di stoffa.</p>
+              <p>Apri il trasportino solo quando sarai arrivato a casa, mai in auto o durante il viaggio.</p>
+            </AdviceBlock>
+
+            <AdviceBlock icon={Home} title="I primi giorni in casa">
+              <p>
+                All’inizio lascialo tranquillo in un bagno, in una stanza piccola
+                o comunque in un luogo ristretto, chiudendo bene finestre e porte.
+              </p>
+              <p>
+                Apri il trasportino ma non forzarlo a uscire: deve sentirsi libero
+                di osservare e muoversi con i suoi tempi.
+              </p>
+              <p>
+                Tieni a disposizione lettiera, acqua e croccantini; il cibo umido
+                è meglio offrirlo mattina e sera.
+              </p>
+              <p>
+                Lascialo in questo spazio per qualche giorno, finché non avrà preso
+                sicurezza e confidenza.
+              </p>
+            </AdviceBlock>
+
+            <AdviceBlock icon={DoorClosed} title="Inserimento con altri gatti">
+              <p>
+                Se in casa c’è già un gatto, evita di presentare subito il nuovo
+                arrivato dal trasportino.
+              </p>
+              <p>
+                L’inserimento va fatto gradualmente, iniziando dallo scambio di
+                odori tramite copertine, cuscini o tessuti su cui hanno dormito.
+              </p>
+              <p>
+                Quando possibile, usa una rete o una porta socchiusa per farli
+                annusare e osservare in sicurezza.
+              </p>
+            </AdviceBlock>
+
+            <AdviceBlock icon={ShieldAlert} title="Cosa non fare assolutamente">
+              <p>Non mettere il collarino.</p>
+              <p>Non fargli il bagno nei primi giorni.</p>
+              <p>Non portarlo subito dal veterinario se non ci sono urgenze.</p>
+              <p>Non tagliare le unghie appena arrivato.</p>
+              <p>Non usare antiparassitari senza aver verificato eventuali trattamenti già fatti.</p>
+            </AdviceBlock>
+
+            <AdviceBlock icon={Cat} title="Cosa fare">
+              <p>
+                Se vuoi cambiare alimentazione, fai uno scalaggio graduale dei
+                croccantini e non cambiare tutto di colpo.
+              </p>
+            </AdviceBlock>
+
+            <AdviceBlock icon={AlertTriangle} title="Pericoli in casa">
+              <p>Terrazzi non protetti.</p>
+              <p>Finestre a vasistas.</p>
+              <p>Elettrodomestici come lavatrici, asciugatrici e lavastoviglie.</p>
+              <p>Fili, lacci, plastica e piccoli oggetti ingeribili.</p>
+              <p>Divani letto e altri meccanismi richiudibili.</p>
+              <p>Water aperto, soprattutto con gattini molto piccoli.</p>
+              <p>Acqua stagnante con detersivi o sostanze nocive.</p>
+              <p>Lettiere autopulenti.</p>
+              <p>Collarini con campanello o anche “di sicurezza”.</p>
+            </AdviceBlock>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: 'due-gatti',
+      title: 'Perché adottare due gatti',
+      subtitle:
+        'Una scheda dedicata ai vantaggi dell’adozione in coppia: equilibrio, socialità, compagnia reciproca e una gestione spesso molto simile.',
+      icon: PawPrint,
+      accent: '#C96B3C',
+      content: (
+        <div className="space-y-4">
+          <p className="max-w-4xl text-xs leading-6 text-gray-700 md:text-sm">
+            Adottare due gatti, soprattutto se compatibili o già abituati alla
+            compagnia, può essere una scelta molto positiva sia per loro sia per
+            chi li accoglie.
+          </p>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <BenefitItem
+              number="1"
+              title="Più gioco, meno disastri"
+              text="Si sfogano tra loro, quindi meno stress, meno disastri."
+              icon={Cat}
+            />
+
+            <BenefitItem
+              number="2"
+              title="Meno solitudine"
+              text="Si fanno compagnia e si sentono al sicuro anche quando non sei in casa."
+              icon={Users}
+            />
+
+            <BenefitItem
+              number="3"
+              title="Miglior equilibrio emotivo"
+              text="Si tranquillizzano a vicenda e sono più sereni ogni giorno."
+              icon={Smile}
+            />
+
+            <BenefitItem
+              number="4"
+              title="Apprendimento sociale"
+              text="Imparano a giocare senza farsi male e a rispettare i limiti."
+              icon={HeartHandshake}
+            />
+
+            <BenefitItem
+              number="5"
+              title="Dose doppia di amore"
+              text="Due personalità, il doppio delle coccole e dei momenti dolci."
+              icon={Heart}
+            />
+
+            <BenefitItem
+              number="6"
+              title="Quasi lo stesso impegno"
+              text="La differenza tra uno o due gatti è minima nella vita quotidiana."
+              icon={PawPrint}
+            />
+          </div>
+        </div>
+      ),
+    },
+  ]
+
+  const activeCard = cards.find((card) => card.id === openCard)
+
   return (
     <main className="min-h-screen bg-[#FCFBF8]">
       <section className="relative min-h-[560px] overflow-hidden">
@@ -44,281 +353,44 @@ export default function ConsigliPage() {
           </p>
 
           <h2 className="text-4xl font-black uppercase leading-none text-black md:text-5xl">
-            Consigli nati dall’esperienza
+            Schede utili per chi adotta
           </h2>
 
           <div className="mt-5 h-3 w-44 bg-[#E4B15A]" />
 
           <div className="mt-8 max-w-4xl space-y-4 text-sm leading-6 text-gray-700 md:text-[15px]">
             <p>
-              Questi consigli nascono dall’esperienza quotidiana dell’associazione
-              e non dalla saccenza: sono indicazioni pratiche che abbiamo imparato
-              nel tempo seguendo adozioni, inserimenti e situazioni delicate.
+              In questa pagina trovi schede tematiche pensate per raccogliere i
+              consigli più utili in modo chiaro e consultabile. L’idea è quella di
+              aggiungere nel tempo sempre più argomenti, così da creare uno spazio
+              pratico per chi si avvicina all’adozione o ha bisogno di orientarsi.
             </p>
-
-            <p>
-              L’arrivo in una nuova casa può essere un momento molto stressante per
-              un gatto, anche quando in gattile o durante gli incontri si è mostrato
-              dolce, affettuoso e tranquillo. Per questo ti chiediamo davvero di
-              ascoltarci e di seguire questi accorgimenti.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="w-full bg-[#E4B15A] py-14">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="flex items-start gap-4">
-            <ShoppingBag size={30} className="mt-1 text-[#1F3B2D]" />
-            <div className="max-w-4xl">
-              <h2 className="text-3xl font-black text-black md:text-4xl">
-                Prima di partire e durante il viaggio
-              </h2>
-
-              <div className="mt-5 space-y-3 text-sm leading-6 text-black/85 md:text-[15px]">
-                <p>
-                  Acquista un trasportino resistente e rigido, non morbido di stoffa.
-                </p>
-                <p>
-                  Apri il trasportino solo quando sarai arrivato a casa, mai in
-                  auto o durante il viaggio.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="w-full bg-white py-14">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="flex items-start gap-4">
-            <Home size={30} className="mt-1 text-[#C96B3C]" />
-            <div className="max-w-4xl">
-              <h2 className="text-3xl font-black text-black md:text-4xl">
-                I primi giorni in casa
-              </h2>
-
-              <div className="mt-5 space-y-3 text-sm leading-6 text-gray-700 md:text-[15px]">
-                <p>
-                  All’inizio lascialo tranquillo in un bagno, in una stanza piccola
-                  o comunque in un luogo ristretto, chiudendo bene finestre e porte.
-                </p>
-                <p>
-                  Apri il trasportino ma non forzarlo a uscire. Dagli il tempo di
-                  osservare e muoversi da solo.
-                </p>
-                <p>
-                  Metti a disposizione lettiera, acqua e croccantini sempre
-                  disponibili; il cibo umido è meglio offrirlo mattina e sera,
-                  mantenendo sempre pulita la ciotola.
-                </p>
-                <p>
-                  Lascialo in questo spazio per qualche giorno, finché non avrà
-                  preso confidenza e imparato a usare bene la lettiera.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="w-full bg-[#1F3B2D] py-14 text-white">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="flex items-start gap-4">
-            <DoorClosed size={30} className="mt-1 text-[#E4B15A]" />
-            <div className="max-w-4xl">
-              <h2 className="text-3xl font-black md:text-4xl">
-                Inserimento con altri gatti
-              </h2>
-
-              <div className="mt-5 space-y-3 text-sm leading-6 text-white/90 md:text-[15px]">
-                <p>
-                  Se hai già un gatto in casa, non presentare il nuovo arrivato
-                  mostrandoglielo dal trasportino: è una cosa spontanea, ma è
-                  sbagliata.
-                </p>
-                <p>
-                  L’inserimento deve avvenire gradualmente, iniziando con lo
-                  scambio di copertine o cuscini su cui i gatti dormono.
-                </p>
-                <p>
-                  Quando possibile, usa una rete o lascia la porta socchiusa di
-                  pochi centimetri, in modo che possano annusarsi e conoscersi con
-                  calma. Solo dopo qualche giorno si potrà aprire gradualmente.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="w-full bg-[#C96B3C] py-14 text-white">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-8 flex items-start gap-4">
-            <ShieldAlert size={30} className="mt-1 text-white" />
-            <div className="max-w-4xl">
-              <h2 className="text-3xl font-black md:text-4xl">
-                Cosa non fare assolutamente
-              </h2>
-            </div>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-5">
-            <div className="bg-white/10 p-6">
-              <h3 className="text-lg font-bold">Non mettere il collarino</h3>
-              <p className="mt-3 text-sm leading-6 text-white/90">
-                Può impigliarsi e diventare pericoloso; anche quelli con sicurezza
-                non sono privi di rischi. 
-              </p>
-            </div>
-
-            <div className="bg-white/10 p-6">
-              <div className="flex items-center gap-2">
-                <Bath size={20} className="text-white" />
-                <h3 className="text-lg font-bold">Non fargli il bagno</h3>
-              </div>
-              <p className="mt-3 text-sm leading-6 text-white/90">
-                Nei primi giorni aumenterebbe solo lo stress.
-              </p>
-            </div>
-
-            <div className="bg-white/10 p-6">
-              <div className="flex items-center gap-2">
-                <Syringe size={20} className="text-white" />
-                <h3 className="text-lg font-bold">Non portarlo subito dal veterinario</h3>
-              </div>
-              <p className="mt-3 text-sm leading-6 text-white/90">
-                Se non ci sono urgenze, è meglio lasciargli il tempo di ambientarsi.
-              </p>
-            </div>
-
-            <div className="bg-white/10 p-6">
-              <div className="flex items-center gap-2">
-                <Cat size={20} className="text-white" />
-                <h3 className="text-lg font-bold">Non tagliare le unghie</h3>
-              </div>
-              <p className="mt-3 text-sm leading-6 text-white/90">
-                Evita manovre che possano spaventarlo o irrigidirlo nei primi giorni.
-              </p>
-            </div>
-
-            <div className="bg-white/10 p-6">
-              <div className="flex items-center gap-2">
-                <AlertTriangle size={20} className="text-white" />
-                <h3 className="text-lg font-bold">No antiparassitari senza verifiche</h3>
-              </div>
-              <p className="mt-3 text-sm leading-6 text-white/90">
-                Non somministrare nulla senza esserti assicurato che non sia già
-                coperto da trattamento.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="w-full bg-white py-14">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="flex items-start gap-4">
-            <HeartHandshake size={30} className="mt-1 text-[#C96B3C]" />
-            <div className="max-w-4xl">
-              <h2 className="text-3xl font-black text-black md:text-4xl">
-                Cosa fare
-              </h2>
-
-              <div className="mt-5 space-y-3 text-sm leading-6 text-gray-700 md:text-[15px]">
-                <p>
-                  Se vuoi cambiare alimentazione, fai uno scalaggio graduale del
-                  cibo, inserendo lentamente i nuovi croccantini insieme a quelli a
-                  cui era abituato.
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
       <section className="w-full bg-[#F3E6CC] py-14">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-8 flex items-start gap-4">
-            <AlertTriangle size={30} className="mt-1 text-[#C96B3C]" />
-            <div className="max-w-4xl">
-              <h2 className="text-3xl font-black text-black md:text-4xl">
-                Pericoli
-              </h2>
-            </div>
+          <div className="mb-10 max-w-4xl">
+            <h2 className="text-3xl font-black uppercase leading-none text-black md:text-4xl">
+              Esplora le schede
+            </h2>
+            <p className="mt-4 text-sm leading-6 text-black/75 md:text-[15px]">
+              Clicca su una scheda per aprire il contenuto completo.
+            </p>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            <div className="bg-white p-6">
-              <h3 className="text-lg font-bold text-black">Terrazzi non protetti</h3>
-              <p className="mt-3 text-sm leading-6 text-gray-700">
-                I gatti cadono: non sanno volare.
-              </p>
-            </div>
-
-            <div className="bg-white p-6">
-              <div className="flex items-center gap-2">
-                <Wind size={20} className="text-[#C96B3C]" />
-                <h3 className="text-lg font-bold text-black">Finestre a vasistas</h3>
-              </div>
-              <p className="mt-3 text-sm leading-6 text-gray-700">
-                Il gatto può restare incastrato.
-              </p>
-            </div>
-
-            <div className="bg-white p-6">
-              <h3 className="text-lg font-bold text-black">Elettrodomestici</h3>
-              <p className="mt-3 text-sm leading-6 text-gray-700">
-                Lavatrici, asciugatrici e lavastoviglie possono diventare
-                nascondigli molto pericolosi.
-              </p>
-            </div>
-
-            <div className="bg-white p-6">
-              <h3 className="text-lg font-bold text-black">Fili, lacci e plastica</h3>
-              <p className="mt-3 text-sm leading-6 text-gray-700">
-                Anche i lacci dei sacchetti possono essere pericolosi.
-              </p>
-            </div>
-
-            <div className="bg-white p-6">
-              <h3 className="text-lg font-bold text-black">Divano letto</h3>
-              <p className="mt-3 text-sm leading-6 text-gray-700">
-                Possono restare chiusi dentro o ferirsi negli ingranaggi.
-              </p>
-            </div>
-
-            <div className="bg-white p-6">
-              <h3 className="text-lg font-bold text-black">Water aperto</h3>
-              <p className="mt-3 text-sm leading-6 text-gray-700">
-                Se sono molto piccoli possono cadere: meglio tenere la tavoletta
-                chiusa.
-              </p>
-            </div>
-
-            <div className="bg-white p-6">
-              <h3 className="text-lg font-bold text-black">Acqua stagnante in casa</h3>
-              <p className="mt-3 text-sm leading-6 text-gray-700">
-                Fai attenzione a dove possono esserci detersivi: wc, bucato in
-                ammollo, scopino, scarichi dell’aria condizionata. 
-              </p>
-            </div>
-
-            <div className="bg-white p-6">
-              <h3 className="text-lg font-bold text-black">Lettiere autopulenti</h3>
-              <p className="mt-3 text-sm leading-6 text-gray-700">
-                Possono essere pericolose o mortali; inoltre se il gatto si spaventa
-                può smettere di usarle. 
-              </p>
-            </div>
-
-            <div className="bg-white p-6">
-              <h3 className="text-lg font-bold text-black">Collarini con sicurezza</h3>
-              <p className="mt-3 text-sm leading-6 text-gray-700">
-                Anche quelli antistrangolo non sono privi di rischi e il campanello
-                è una fonte continua di stress.
-              </p>
-            </div>
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {cards.map((card) => (
+              <TopicCard
+                key={card.id}
+                title={card.title}
+                subtitle={card.subtitle}
+                icon={card.icon}
+                accent={card.accent}
+                onClick={() => setOpenCard(card.id)}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -333,7 +405,7 @@ export default function ConsigliPage() {
               <p className="mt-4 max-w-2xl text-sm leading-6 text-white/90">
                 In caso di dubbi o difficoltà, il consiglio migliore resta sempre
                 quello di sentire il referente volontario che ha seguito
-                l’adozione. 
+                l’adozione.
               </p>
             </div>
 
@@ -348,6 +420,14 @@ export default function ConsigliPage() {
           </div>
         </div>
       </section>
+
+      <Modal
+        open={!!activeCard}
+        onClose={() => setOpenCard(null)}
+        title={activeCard?.title || ''}
+      >
+        {activeCard?.content}
+      </Modal>
     </main>
   )
 }

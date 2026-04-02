@@ -41,7 +41,15 @@ export default function Home() {
 
           <div className="mt-8 space-y-4 text-[15px] leading-7 text-gray-700 md:text-base">
             <p>
-L’Associazione Calico odv è costituita da un gruppo di volontarie e volontari attivi su tutto il territorio del Lazio. Il nostro obiettivo? Non lasciare solo nessun animale bisognoso. A Nepi, in provincia di Viterbo abbiamo creato la Gatteria, un piccolo rifugio dove accogliamo gatti abbandonati e gli troviamo una famiglia. A Roma ci occupiamo dei gatti ospitati presso ValleGrande. Vigiliamo sul loro benessere e promuoviamo le adozioni di gatti e cani ospiti della struttura.             </p>
+              L’Associazione Calico odv è costituita da un gruppo di volontarie e
+              volontari attivi su tutto il territorio del Lazio. Il nostro
+              obiettivo? Non lasciare solo nessun animale bisognoso. A Nepi, in
+              provincia di Viterbo abbiamo creato la Gatteria, un piccolo rifugio
+              dove accogliamo gatti abbandonati e gli troviamo una famiglia. A
+              Roma ci occupiamo dei gatti ospitati presso ValleGrande. Vigiliamo
+              sul loro benessere e promuoviamo le adozioni di gatti e cani ospiti
+              della struttura.
+            </p>
           </div>
         </div>
 
@@ -115,15 +123,24 @@ L’Associazione Calico odv è costituita da un gruppo di volontarie e volontari
               </h3>
 
               <p className="mt-5 max-w-xl text-sm leading-6 md:text-[15px]">
-                Non cercare la perfezione, cerca l'emozione. Fatti guidare dal cuore e lasciati trovare: perché alla fine, sono sempre loro a sceglierci.
+                Non cercare la perfezione, cerca l&apos;emozione. Fatti guidare dal
+                cuore e lasciati trovare: perché alla fine, sono sempre loro a
+                sceglierci.
               </p>
 
-              <div className="mt-6">
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/adozioni"
-                  className="inline-flex bg-black px-5 py-3 text-sm font-bold text-white transition hover:opacity-85"
+                  className="inline-flex justify-center bg-black px-5 py-3 text-sm font-bold text-white transition hover:opacity-85"
                 >
-                  Scopri di più
+                  Adotta un gatto
+                </Link>
+
+                <Link
+                  href="/cani"
+                  className="inline-flex justify-center border border-black bg-transparent px-5 py-3 text-sm font-bold text-black transition hover:bg-black hover:text-white"
+                >
+                  Adotta un cane
                 </Link>
               </div>
             </div>
@@ -177,7 +194,9 @@ L’Associazione Calico odv è costituita da un gruppo di volontarie e volontari
               </h3>
 
               <p className="mt-5 max-w-xl text-sm leading-6 text-white/90 md:text-[15px]">
-                Basta davvero poco per aiutarci ad aiutarli. Anche il valore di pochi euro può garantire cure e cibo a chi è stato meno fortunato: ogni goccia conta!
+                Basta davvero poco per aiutarci ad aiutarli. Anche il valore di
+                pochi euro può garantire cure e cibo a chi è stato meno fortunato:
+                ogni goccia conta!
               </p>
 
               <div className="mt-6">
@@ -198,9 +217,10 @@ L’Associazione Calico odv è costituita da un gruppo di volontarie e volontari
               </h3>
 
               <p className="mt-5 max-w-xl text-sm leading-6 text-black/80 md:text-[15px]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                habitant morbi tristique senectus et netus et malesuada fames ac
-                turpis egestas. Donec tincidunt lectus et tempor dignissim.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Pellentesque habitant morbi tristique senectus et netus et
+                malesuada fames ac turpis egestas. Donec tincidunt lectus et
+                tempor dignissim.
               </p>
 
               <div className="mt-6">
@@ -226,7 +246,7 @@ L’Associazione Calico odv è costituita da un gruppo di volontarie e volontari
       </section>
 
       <section className="w-full bg-[#1F3B2D] py-16 text-white">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-2 items-center">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 md:grid-cols-2">
           <div>
             <h2 className="text-4xl font-black uppercase tracking-tight">
               Contattaci
@@ -234,22 +254,30 @@ L’Associazione Calico odv è costituita da un gruppo di volontarie e volontari
 
             <div className="mt-4 h-2 w-28 bg-[#E4B15A]" />
 
-            <p className="mt-6 text-sm leading-7 text-white/90 max-w-md">
-              Hai domande su un gatto? Vuoi adottare o darci una mano? Scrivici, ti risponderemo il prima possibile.
+            <p className="mt-6 max-w-md text-sm leading-7 text-white/90">
+              Hai domande su un gatto? Vuoi adottare o darci una mano? Scrivici,
+              ti risponderemo il prima possibile.
             </p>
 
             <div className="mt-8 space-y-3 text-sm">
-              <p><span className="font-bold">Email:</span> info@calicoodv.it</p>
-              <p><span className="font-bold">Telefono:</span> +39 000 0000000</p>
-              <p><span className="font-bold">Instagram:</span> @calicoodv</p>
-              <p><span className="font-bold">Facebook:</span> Associazione Calico ODV</p>
+              <p>
+                <span className="font-bold">Email:</span> info@calicoodv.it
+              </p>
+              <p>
+                <span className="font-bold">Telefono:</span> +39 000 0000000
+              </p>
+              <p>
+                <span className="font-bold">Instagram:</span> @calicoodv
+              </p>
+              <p>
+                <span className="font-bold">Facebook:</span> Associazione Calico
+                ODV
+              </p>
             </div>
           </div>
 
           <div className="bg-white p-8 text-black">
-            <h3 className="mb-4 text-2xl font-bold">
-              Scrivici un messaggio
-            </h3>
+            <h3 className="mb-4 text-2xl font-bold">Scrivici un messaggio</h3>
 
             <form className="space-y-4">
               <input
