@@ -1,54 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
 import { FaPaypal, FaWhatsapp, FaInstagram, FaFacebookF } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
-
-type CounterProps = {
-  label: string
-  target: number
-  suffix?: string
-  colorClass?: string
-}
-
-function Counter({
-  label,
-  target,
-  suffix = '',
-  colorClass = 'text-black',
-}: CounterProps) {
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    let start = 0
-    const duration = 1200
-    const increment = Math.max(1, Math.ceil(target / 50))
-
-    const timer = window.setInterval(() => {
-      start += increment
-
-      if (start >= target) {
-        setCount(target)
-        window.clearInterval(timer)
-      } else {
-        setCount(start)
-      }
-    }, duration / 50)
-
-    return () => window.clearInterval(timer)
-  }, [target])
-
-  return (
-    <div className="text-center">
-      <p className="text-base font-bold text-black md:text-lg">{label}</p>
-      <p className={`mt-2 text-4xl font-black leading-none md:text-6xl ${colorClass}`}>
-        {count}
-        {suffix}
-      </p>
-    </div>
-  )
-}
+import StatsStrip from '@/components/home/StatsStrip'
 
 export default function SostieniciPage() {
   return (
@@ -72,11 +27,21 @@ export default function SostieniciPage() {
             </h1>
 
             <div className="mt-6 max-w-3xl bg-white/90 px-5 py-4 text-sm leading-6 text-black shadow-sm backdrop-blur-sm">
-              L’Associazione Calico ODV è un ente del Terzo Settore. Le donazioni effettuate a suo favore, tramite bonifico bancario, strumenti di pagamento tracciabili o altri mezzi previsti dalla normativa, possono beneficiare delle agevolazioni fiscali vigenti.
-
-In base alla legislazione italiana, le erogazioni liberali a favore delle organizzazioni di volontariato consentono, a seconda dei casi, di ottenere detrazioni d’imposta oppure deduzioni dal reddito imponibile. I benefici fiscali possono essere applicati in sede di dichiarazione dei redditi (Modello 730 o Modello Redditi).
-
-Per poter usufruire delle agevolazioni è necessario conservare la ricevuta del versamento effettuato.
+              L’Associazione Calico ODV è un ente del Terzo Settore. Le donazioni
+              effettuate a suo favore, tramite bonifico bancario, strumenti di
+              pagamento tracciabili o altri mezzi previsti dalla normativa,
+              possono beneficiare delle agevolazioni fiscali vigenti.
+              <br />
+              <br />
+              In base alla legislazione italiana, le erogazioni liberali a favore
+              delle organizzazioni di volontariato consentono, a seconda dei
+              casi, di ottenere detrazioni d’imposta oppure deduzioni dal reddito
+              imponibile. I benefici fiscali possono essere applicati in sede di
+              dichiarazione dei redditi (Modello 730 o Modello Redditi).
+              <br />
+              <br />
+              Per poter usufruire delle agevolazioni è necessario conservare la
+              ricevuta del versamento effettuato.
             </div>
           </div>
         </div>
@@ -126,28 +91,7 @@ Per poter usufruire delle agevolazioni è necessario conservare la ricevuta del 
         </div>
       </section>
 
-      <section className="w-full bg-white">
-        <div className="mx-auto flex min-h-[220px] max-w-7xl flex-col justify-center gap-10 px-6 py-10 md:flex-row md:items-center md:justify-between md:gap-6">
-          <Counter
-            label="Totale raccolto"
-            target={957}
-            suffix=" €"
-            colorClass="text-[#E4B15A]"
-          />
-          <Counter
-            label="Fino ad ora abbiamo donato"
-            target={858}
-            suffix=" €"
-            colorClass="text-[#1F3B2D]"
-          />
-          <Counter
-            label="Cifra raccolta per il progetto"
-            target={99}
-            suffix=" €"
-            colorClass="text-[#C96B3C]"
-          />
-        </div>
-      </section>
+      <StatsStrip />
 
       <section className="w-full bg-[#FCFBF8]">
         <div className="space-y-0">
@@ -158,9 +102,10 @@ Per poter usufruire delle agevolazioni è necessario conservare la ricevuta del 
               </h2>
 
               <p className="mt-4 max-w-xl text-sm leading-6 text-black/85">
-                Puoi sostenere l&apos;Associazione Calico anche con una piccola donazione
-                mensile tramite Teaming. Con solo 1€ al mese ci aiuti a garantire cure,
-                cibo e assistenza ai gatti, cani e altri animali che seguiamo ogni giorno.
+                Puoi sostenere l&apos;Associazione Calico anche con una piccola
+                donazione mensile tramite Teaming. Con solo 1€ al mese ci aiuti
+                a garantire cure, cibo e assistenza ai gatti, cani e altri
+                animali che seguiamo ogni giorno.
               </p>
 
               <div className="mt-5">
@@ -204,9 +149,10 @@ Per poter usufruire delle agevolazioni è necessario conservare la ricevuta del 
               </div>
 
               <p className="mt-4 max-w-xl text-sm leading-6 text-black/75">
-                Puoi sostenerci anche tramite PayPal. Ogni donazione, anche piccola,
-                ci aiuta a coprire spese veterinarie, cibo, medicinali e tutto ciò
-                che serve per prenderci cura degli animali che seguiamo.
+                Puoi sostenerci anche tramite PayPal. Ogni donazione, anche
+                piccola, ci aiuta a coprire spese veterinarie, cibo, medicinali
+                e tutto ciò che serve per prenderci cura degli animali che
+                seguiamo.
               </p>
 
               <div className="mt-5">
@@ -229,9 +175,9 @@ Per poter usufruire delle agevolazioni è necessario conservare la ricevuta del 
               </h2>
 
               <p className="mt-4 max-w-xl text-sm leading-6 text-white/90">
-                Puoi aiutarci anche donando cibo e prodotti utili per i nostri animali.
-                Abbiamo preparato una lista Amazon con le necessità più urgenti, così puoi
-                scegliere facilmente cosa inviarci.
+                Puoi aiutarci anche donando cibo e prodotti utili per i nostri
+                animali. Abbiamo preparato una lista Amazon con le necessità più
+                urgenti, così puoi scegliere facilmente cosa inviarci.
               </p>
 
               <div className="mt-5">
@@ -272,14 +218,14 @@ Per poter usufruire delle agevolazioni è necessario conservare la ricevuta del 
               </h2>
 
               <p className="mt-4 max-w-xl text-sm leading-6 text-black/80">
-                Accettiamo anche coperte, asciugamani, vestiti e mobili che possano
-                essere utili per i nostri spazi o per raccogliere fondi a sostegno
-                dell&apos;associazione.
+                Accettiamo anche coperte, asciugamani, vestiti e mobili che
+                possano essere utili per i nostri spazi o per raccogliere fondi
+                a sostegno dell&apos;associazione.
               </p>
 
               <p className="mt-3 max-w-xl text-sm leading-6 text-black/80">
-                Non esitare a contattarci sui nostri social, su WhatsApp o via mail
-                per accordarti con noi e consegnarci queste cose.
+                Non esitare a contattarci sui nostri social, su WhatsApp o via
+                mail per accordarti con noi e consegnarci queste cose.
               </p>
 
               <div className="mt-6 flex items-center gap-5">
@@ -294,7 +240,7 @@ Per poter usufruire delle agevolazioni è necessario conservare la ricevuta del 
                 </a>
 
                 <a
-                  href="https://instagram.com/tuo_profilo"
+                  href="https://www.instagram.com/associazionecalico"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
@@ -304,7 +250,7 @@ Per poter usufruire delle agevolazioni è necessario conservare la ricevuta del 
                 </a>
 
                 <a
-                  href="https://facebook.com/tuapagina"
+                  href="https://www.facebook.com/associazionecalico/?locale=it_IT"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
@@ -314,7 +260,7 @@ Per poter usufruire delle agevolazioni è necessario conservare la ricevuta del 
                 </a>
 
                 <a
-                  href="mailto:info@calicoodv.it"
+                  href="mailto:calicoassociazione@gmail.com"
                   aria-label="Email"
                   className="text-black transition hover:opacity-80"
                 >

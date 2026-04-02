@@ -94,21 +94,29 @@ export default function GatteriaPage() {
                 informazioni sul rifugio e i gatti in adozione.
               </p>
 
-              <div className="mt-5">
-                <a
-                  href="https://catlives.org/en/shelters/la-gatteria"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex bg-[#1F3B2D] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90"
-                >
-                  Guarda La Gatteria su CatLives
-                </a>
-              </div>
+              <div className="mt-6">
+  <Image
+    src="/catlives.svg"
+    alt="CatLives"
+    width={120}
+    height={40}
+    className="mb-4 object-contain"
+  />
+
+  <a
+    href="https://catlives.org/en/shelters/la-gatteria"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex bg-[#1F3B2D] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90"
+  >
+    Guarda La Gatteria su CatLives
+  </a>
+</div>
             </div>
 
             <div className="relative min-h-[260px]">
               <Image
-                src="/gatto-4.jpg"
+                src="/catlives.png"
                 alt="CatLives e i gatti della Gatteria"
                 fill
                 className="object-cover"

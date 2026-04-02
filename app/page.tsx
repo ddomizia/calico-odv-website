@@ -1,6 +1,62 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import {
+  PawPrint,
+  Heart,
+  Cat,
+  Dog,
+  HeartHandshake,
+  BookOpen,
+} from 'lucide-react'
 import StatsStrip from '@/components/home/StatsStrip'
+
+type FancyButtonProps = {
+  href: string
+  label: string
+  variant?: 'dark' | 'light' | 'gold' | 'cream'
+  icon: React.ElementType
+  heartClassName?: string
+  iconClassName?: string
+}
+
+function FancyButton({
+  href,
+  label,
+  variant = 'dark',
+  icon: Icon,
+  heartClassName = 'text-[#E4B15A]',
+  iconClassName = 'text-black',
+}: FancyButtonProps) {
+  const variants = {
+    dark: 'bg-black text-white hover:opacity-90',
+    light: 'bg-white text-black hover:opacity-90',
+    gold: 'bg-[#E4B15A] text-black hover:opacity-90',
+    cream:
+      'border border-black bg-transparent text-black hover:bg-black hover:text-white',
+  }
+
+  return (
+    <Link
+      href={href}
+      className={`group relative inline-flex h-[48px] items-center justify-center overflow-hidden px-5 text-sm font-bold transition ${variants[variant]}`}
+    >
+      <span className="transition-opacity duration-200 group-hover:opacity-0">
+        {label}
+      </span>
+
+      <span className="absolute flex items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100">
+        <span className="relative flex items-center justify-center">
+          <Heart
+            size={36}
+            className={`absolute animate-pulse ${heartClassName}`}
+            fill="currentColor"
+          />
+          <Icon size={18} className={`relative ${iconClassName}`} />
+        </span>
+      </span>
+    </Link>
+  )
+}
 
 export default function Home() {
   return (
@@ -50,6 +106,18 @@ export default function Home() {
               sul loro benessere e promuoviamo le adozioni di gatti e cani ospiti
               della struttura.
             </p>
+          </div>
+
+          <div className="mt-8">
+            <Link
+              href="/chi-siamo"
+              className="inline-flex items-center gap-3 bg-[#1F3B2D] px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:opacity-90"
+            >
+              <span className="inline-flex animate-bounce">
+                <PawPrint size={18} className="text-[#E4B15A]" />
+              </span>
+              Conoscici meglio
+            </Link>
           </div>
         </div>
 
@@ -129,19 +197,23 @@ export default function Home() {
               </p>
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <Link
+                <FancyButton
                   href="/adozioni"
-                  className="inline-flex justify-center bg-black px-5 py-3 text-sm font-bold text-white transition hover:opacity-85"
-                >
-                  Adotta un gatto
-                </Link>
+                  label="Adotta un gatto"
+                  variant="dark"
+                  icon={Cat}
+                  heartClassName="text-[#FCFBF8]"
+                  iconClassName="text-black"
+                />
 
-                <Link
+                <FancyButton
                   href="/cani"
-                  className="inline-flex justify-center border border-black bg-transparent px-5 py-3 text-sm font-bold text-black transition hover:bg-black hover:text-white"
-                >
-                  Adotta un cane
-                </Link>
+                  label="Adotta un cane"
+                  variant="cream"
+                  icon={Dog}
+                  heartClassName="text-[#C96B3C]"
+                  iconClassName="text-black"
+                />
               </div>
             </div>
           </div>
@@ -159,12 +231,14 @@ export default function Home() {
               </p>
 
               <div className="mt-6">
-                <Link
+                <FancyButton
                   href="/diventa-volontario"
-                  className="inline-flex bg-[#E4B15A] px-5 py-3 text-sm font-bold text-black transition hover:opacity-85"
-                >
-                  Scopri di più
-                </Link>
+                  label="Scopri di più"
+                  variant="gold"
+                  icon={PawPrint}
+                  heartClassName="text-[#FCFBF8]"
+                  iconClassName="text-[#1F3B2D]"
+                />
               </div>
             </div>
 
@@ -200,12 +274,14 @@ export default function Home() {
               </p>
 
               <div className="mt-6">
-                <Link
+                <FancyButton
                   href="/sostienici"
-                  className="inline-flex bg-white px-5 py-3 text-sm font-bold text-[#C96B3C] transition hover:opacity-85"
-                >
-                  Scopri di più
-                </Link>
+                  label="Scopri di più"
+                  variant="light"
+                  icon={HeartHandshake}
+                  heartClassName="text-[#E4B15A]"
+                  iconClassName="text-[#C96B3C]"
+                />
               </div>
             </div>
           </div>
@@ -224,12 +300,14 @@ export default function Home() {
               </p>
 
               <div className="mt-6">
-                <Link
+                <FancyButton
                   href="/consigli"
-                  className="inline-flex bg-black px-5 py-3 text-sm font-bold text-white transition hover:opacity-85"
-                >
-                  Scopri di più
-                </Link>
+                  label="Scopri di più"
+                  variant="dark"
+                  icon={BookOpen}
+                  heartClassName="text-[#E4B15A]"
+                  iconClassName="text-black"
+                />
               </div>
             </div>
 
