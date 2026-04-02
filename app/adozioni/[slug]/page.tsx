@@ -1,7 +1,23 @@
+import type { ReactNode } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { Calendar, HeartPulse, MapPin, Mars, Venus } from 'lucide-react'
+import {
+  Calendar,
+  HeartPulse,
+  MapPin,
+  Mars,
+  Venus,
+  ShieldCheck,
+  Syringe,
+  PawPrint,
+  Cat,
+  Ticket,
+  Ruler,
+  BadgeCheck,
+  Scale,
+  Dog,
+} from 'lucide-react'
 import { FaWhatsapp, FaInstagram, FaFacebookF } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 import { client } from '../../../sanity/lib/client'
@@ -16,14 +32,38 @@ type Animal = {
   }
   species?: 'cat' | 'dog'
   sex?: 'male' | 'female'
-  age?: string
+  ageValue?: number
+  ageUnit?: 'months' | 'years'
   hostLocation?: string
   description?: string
   image?: any
+  empethyUrl?: string
+
+  // GATTI
+  coatLength?: 'short' | 'medium' | 'long'
+  breed?: string
+  isCrossbreed?: boolean
+  crossbreedDetails?: string
+  dewormed?: boolean
+  microchipped?: boolean
+  vaccinated?: boolean
+  sterilized?: boolean
   fivStatus?: 'positive' | 'negative' | 'not_tested'
   felvStatus?: 'positive' | 'negative' | 'not_tested'
   specialConditions?: string[]
   healthNotes?: string
+
+  // CANI
+  dogSize?: 'small' | 'medium' | 'large'
+  dogWeight?: number
+  dogCoatLength?: 'short' | 'medium' | 'long'
+  dogBreed?: string
+  isCrossbreedDog?: boolean
+  crossbreedDogDetails?: string
+  dogDewormed?: boolean
+  dogMicrochipped?: boolean
+  dogVaccinated?: boolean
+  dogSterilized?: boolean
 }
 
 const sexLabels: Record<string, string> = {
@@ -35,6 +75,100 @@ const statusLabels: Record<string, string> = {
   positive: '+',
   negative: '-',
   not_tested: 'non testato',
+}
+
+const coatLabels: Record<string, string> = {
+  short: 'Pelo corto',
+  medium: 'Pelo medio',
+  long: 'Pelo lungo',
+}
+
+const dogSizeLabels: Record<string, string> = {
+  small: 'Taglia piccola',
+  medium: 'Taglia media',
+  large: 'Taglia grande',
+}
+
+const breedLabels: Record<string, string> = {
+  european: 'Europeo',
+  tabby: 'Soriano / Tabby',
+  persian: 'Persiano',
+  maine_coon: 'Maine Coon',
+  siamese: 'Siamese',
+  ragdoll: 'Ragdoll',
+  british_shorthair: 'British Shorthair',
+  british_longhair: 'British Longhair',
+  norwegian_forest: 'Norvegese delle Foreste',
+  siberian: 'Siberiano',
+  bengal: 'Bengala',
+  birman: 'Sacro di Birmania',
+  russian_blue: 'Blu di Russia',
+  sphynx: 'Sphynx',
+  abyssinian: 'Abissino',
+  somali: 'Somalo',
+  oriental: 'Orientale',
+  devon_rex: 'Devon Rex',
+  cornish_rex: 'Cornish Rex',
+  exotic_shorthair: 'Exotic Shorthair',
+  scottish_fold: 'Scottish Fold',
+  scottish_straight: 'Scottish Straight',
+  american_shorthair: 'American Shorthair',
+  american_curl: 'American Curl',
+  turkish_van: 'Turco Van',
+  turkish_angora: 'Angora Turco',
+  egyptian_mau: 'Egyptian Mau',
+  ocicat: 'Ocicat',
+  chartreux: 'Chartreux',
+  burmese: 'Burmese',
+  burmilla: 'Burmilla',
+  tonkinese: 'Tonkinese',
+  balinese: 'Balinese',
+  himalayan: 'Himalayano',
+  selkirk_rex: 'Selkirk Rex',
+  laperm: 'LaPerm',
+  snowshoe: 'Snowshoe',
+  munchkin: 'Munchkin',
+  savannah: 'Savannah',
+  toyger: 'Toyger',
+  singapura: 'Singapura',
+  nebelung: 'Nebelung',
+  korat: 'Korat',
+  pixie_bob: 'Pixie-Bob',
+  ragamuffin: 'Ragamuffin',
+  mixed_unknown: 'Misto / Non definita',
+}
+
+const dogBreedLabels: Record<string, string> = {
+  mixed: 'Meticcio',
+  labrador: 'Labrador Retriever',
+  golden: 'Golden Retriever',
+  german_shepherd: 'Pastore Tedesco',
+  border_collie: 'Border Collie',
+  jack_russell: 'Jack Russell Terrier',
+  bulldog: 'Bulldog',
+  beagle: 'Beagle',
+  poodle: 'Barboncino',
+  chihuahua: 'Chihuahua',
+  cocker: 'Cocker Spaniel',
+  setter: 'Setter',
+  dalmatian: 'Dalmata',
+  rottweiler: 'Rottweiler',
+  dobermann: 'Dobermann',
+  husky: 'Husky Siberiano',
+  shih_tzu: 'Shih Tzu',
+  maltese: 'Maltese',
+  volpino: 'Volpino',
+  akita: 'Akita',
+  cane_corso: 'Cane Corso',
+  dachshund: 'Bassotto',
+  pug: 'Carlino',
+  weimaraner: 'Weimaraner',
+  great_dane: 'Alano',
+  pitbull: 'Pitbull',
+  amstaff: 'American Staffordshire Terrier',
+  segugio: 'Segugio',
+  greyhound: 'Levriero',
+  other: 'Altro / Non definita',
 }
 
 const conditionLabels: Record<string, string> = {
@@ -51,6 +185,22 @@ const conditionLabels: Record<string, string> = {
   paralisi_parziale: 'Paralisi parziale',
 }
 
+function formatAge(ageValue?: number, ageUnit?: 'months' | 'years') {
+  if (ageValue === undefined || ageValue === null) return null
+
+  if (ageUnit === 'months') {
+    return `${ageValue} ${ageValue === 1 ? 'mese' : 'mesi'}`
+  }
+
+  return `${ageValue} ${ageValue === 1 ? 'anno' : 'anni'}`
+}
+
+type DetailItem = {
+  key: string
+  icon: ReactNode
+  text: string
+}
+
 export default async function AnimalPage({
   params,
 }: {
@@ -64,7 +214,7 @@ export default async function AnimalPage({
     notFound()
   }
 
-  const infoItems = [
+  const infoItems: DetailItem[] = [
     animal.species === 'cat' && animal.fivStatus
       ? {
           key: 'fiv',
@@ -91,20 +241,164 @@ export default async function AnimalPage({
           text: sexLabels[animal.sex],
         }
       : null,
-    animal.age
+    formatAge(animal.ageValue, animal.ageUnit)
       ? {
           key: 'age',
           icon: <Calendar size={17} className="text-green-700" />,
-          text: `${animal.age} anni`,
+          text: formatAge(animal.ageValue, animal.ageUnit)!,
         }
       : null,
-  ].filter(Boolean) as { key: string; icon: React.ReactNode; text: string }[]
+    animal.species === 'dog' && animal.dogSize
+      ? {
+          key: 'dogSize',
+          icon: <Dog size={17} className="text-green-700" />,
+          text: dogSizeLabels[animal.dogSize] ?? animal.dogSize,
+        }
+      : null,
+    animal.species === 'dog' && animal.dogWeight
+      ? {
+          key: 'dogWeight',
+          icon: <Scale size={17} className="text-green-700" />,
+          text: `${animal.dogWeight} kg`,
+        }
+      : null,
+  ].filter(Boolean) as DetailItem[]
+
+  const extraIconClass = 'text-[#C96B3C]'
+
+  const catExtraInfoItems: DetailItem[] = [
+    animal.species === 'cat' && animal.coatLength
+      ? {
+          key: 'coatLength',
+          icon: <Ruler size={17} className={extraIconClass} />,
+          text: coatLabels[animal.coatLength] ?? animal.coatLength,
+        }
+      : null,
+    animal.species === 'cat' && animal.breed
+      ? {
+          key: 'breed',
+          icon: <Cat size={17} className={extraIconClass} />,
+          text: `Razza: ${breedLabels[animal.breed] ?? animal.breed}`,
+        }
+      : null,
+    animal.species === 'cat' && animal.isCrossbreed && animal.crossbreedDetails
+      ? {
+          key: 'crossbreedDetails',
+          icon: <PawPrint size={17} className={extraIconClass} />,
+          text: `Incrocio: ${animal.crossbreedDetails}`,
+        }
+      : animal.species === 'cat' && animal.isCrossbreed
+      ? {
+          key: 'crossbreed',
+          icon: <PawPrint size={17} className={extraIconClass} />,
+          text: 'Incrocio',
+        }
+      : null,
+    animal.species === 'cat' && animal.dewormed
+      ? {
+          key: 'dewormed',
+          icon: <ShieldCheck size={17} className={extraIconClass} />,
+          text: 'Sverminato',
+        }
+      : null,
+    animal.species === 'cat' && animal.microchipped
+      ? {
+          key: 'microchipped',
+          icon: <Ticket size={17} className={extraIconClass} />,
+          text: 'Microchip',
+        }
+      : null,
+    animal.species === 'cat' && animal.vaccinated
+      ? {
+          key: 'vaccinated',
+          icon: <Syringe size={17} className={extraIconClass} />,
+          text: 'Vaccinato',
+        }
+      : null,
+    animal.species === 'cat' && animal.sterilized
+      ? {
+          key: 'sterilized',
+          icon: <BadgeCheck size={17} className={extraIconClass} />,
+          text: 'Sterilizzato',
+        }
+      : null,
+  ].filter(Boolean) as DetailItem[]
+
+  const dogExtraInfoItems: DetailItem[] = [
+    animal.species === 'dog' && animal.dogCoatLength
+      ? {
+          key: 'dogCoatLength',
+          icon: <Ruler size={17} className={extraIconClass} />,
+          text: coatLabels[animal.dogCoatLength] ?? animal.dogCoatLength,
+        }
+      : null,
+    animal.species === 'dog' && animal.dogBreed
+      ? {
+          key: 'dogBreed',
+          icon: <Dog size={17} className={extraIconClass} />,
+          text: `Razza: ${dogBreedLabels[animal.dogBreed] ?? animal.dogBreed}`,
+        }
+      : null,
+    animal.species === 'dog' && animal.isCrossbreedDog && animal.crossbreedDogDetails
+      ? {
+          key: 'crossbreedDogDetails',
+          icon: <PawPrint size={17} className={extraIconClass} />,
+          text: `Incrocio: ${animal.crossbreedDogDetails}`,
+        }
+      : animal.species === 'dog' && animal.isCrossbreedDog
+      ? {
+          key: 'crossbreedDog',
+          icon: <PawPrint size={17} className={extraIconClass} />,
+          text: 'Incrocio',
+        }
+      : null,
+    animal.species === 'dog' && animal.dogDewormed
+      ? {
+          key: 'dogDewormed',
+          icon: <ShieldCheck size={17} className={extraIconClass} />,
+          text: 'Sverminato',
+        }
+      : null,
+    animal.species === 'dog' && animal.dogMicrochipped
+      ? {
+          key: 'dogMicrochipped',
+          icon: <Ticket size={17} className={extraIconClass} />,
+          text: 'Microchip',
+        }
+      : null,
+    animal.species === 'dog' && animal.dogVaccinated
+      ? {
+          key: 'dogVaccinated',
+          icon: <Syringe size={17} className={extraIconClass} />,
+          text: 'Vaccinato',
+        }
+      : null,
+    animal.species === 'dog' && animal.dogSterilized
+      ? {
+          key: 'dogSterilized',
+          icon: <BadgeCheck size={17} className={extraIconClass} />,
+          text: 'Sterilizzato',
+        }
+      : null,
+  ].filter(Boolean) as DetailItem[]
+
+  const extraInfoItems =
+    animal.species === 'dog' ? dogExtraInfoItems : catExtraInfoItems
+
+  const hasCatExtraContent =
+    animal.species === 'cat' &&
+    (extraInfoItems.length > 0 ||
+      animal.healthNotes ||
+      (animal.specialConditions && animal.specialConditions.length > 0))
+
+  const hasDogExtraContent =
+    animal.species === 'dog' && extraInfoItems.length > 0
 
   return (
     <main className="min-h-screen bg-white">
       <section className="mx-auto max-w-6xl px-6 py-10">
         <Link
-          href="/adozioni"
+          href={animal.species === 'dog' ? '/cani' : '/adozioni'}
           className="mb-8 inline-flex text-sm text-gray-600 transition hover:text-black"
         >
           ← Torna alle adozioni
@@ -169,71 +463,108 @@ export default async function AnimalPage({
                   {animal.description}
                 </p>
               )}
+            </div>
 
-              {animal.healthNotes && (
-                <p className="mt-4 text-[15px] leading-7 text-gray-700">
-                  {animal.healthNotes}
-                </p>
-              )}
+            {(hasCatExtraContent || hasDogExtraContent) && (
+              <div className="mt-6 border-y border-gray-200 py-6">
+                {extraInfoItems.length > 0 && (
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {extraInfoItems.map((item) => (
+                      <div
+                        key={item.key}
+                        className="flex items-center gap-2 text-[15px] text-gray-800"
+                      >
+                        {item.icon}
+                        <span>{item.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
-              {animal.specialConditions && animal.specialConditions.length > 0 && (
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {animal.specialConditions.map((condition) => (
-                    <span
-                      key={condition}
-                      className="inline-flex items-center border border-orange-200 bg-orange-50 px-3 py-1.5 text-sm font-medium text-orange-800"
-                    >
-                      {conditionLabels[condition] ?? condition}
-                    </span>
-                  ))}
+                {animal.species === 'cat' &&
+                  animal.specialConditions &&
+                  animal.specialConditions.length > 0 && (
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {animal.specialConditions.map((condition) => (
+                        <span
+                          key={condition}
+                          className="inline-flex items-center border border-orange-200 bg-orange-50 px-3 py-1.5 text-sm font-medium text-orange-800"
+                        >
+                          {conditionLabels[condition] ?? condition}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                {animal.species === 'cat' && animal.healthNotes && (
+                  <p className="mt-5 text-[15px] leading-7 text-gray-700">
+                    {animal.healthNotes}
+                  </p>
+                )}
+              </div>
+            )}
+
+            <div className="mt-8 pt-1">
+              <p className="mb-4 text-base font-medium leading-7 text-black">
+                Vuoi adottare <span className="font-semibold">{animal.name}</span>?
+                Registrati e compila il form su Empethy e ti faremo sapere nel più
+                breve tempo possibile. Se hai dubbi o vuoi farci delle domande puoi
+                scriverci sui nostri social, whatsapp o inviarci una mail!
+              </p>
+
+              <div className="flex items-center gap-5">
+                <a
+                  href="https://wa.me/39XXXXXXXXXX"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp"
+                  className="text-[#25D366] transition hover:opacity-80"
+                >
+                  <FaWhatsapp size={26} />
+                </a>
+
+                <a
+                  href="https://instagram.com/tuo_profilo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="text-[#E4405F] transition hover:opacity-80"
+                >
+                  <FaInstagram size={24} />
+                </a>
+
+                <a
+                  href="https://facebook.com/tuapagina"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="text-[#1877F2] transition hover:opacity-80"
+                >
+                  <FaFacebookF size={22} />
+                </a>
+
+                <a
+                  href="mailto:info@calicoodv.it"
+                  aria-label="Email"
+                  className="text-black transition hover:opacity-80"
+                >
+                  <MdEmail size={28} />
+                </a>
+              </div>
+
+              {animal.empethyUrl && (
+                <div className="mt-6">
+                  <a
+                    href={animal.empethyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex bg-[#E4B15A] px-5 py-3 text-sm font-bold text-black transition hover:opacity-90"
+                  >
+                    Adotta tramite Empethy
+                  </a>
                 </div>
               )}
             </div>
-
-            <div className="mt-8 border-t border-gray-200 pt-6">
-  <p className="mb-4 text-base font-medium text-black">
-  Vuoi adottare <span className="font-semibold">{animal.name}</span> o chiederci maggiori informazioni? Scrivici su Whatsapp, Instagram, Facebook o inviaci una mail, risponderemo il prima possibile!
-</p>
-  <div className="flex items-center gap-5">
-    <a
-      href="https://wa.me/39XXXXXXXXXX"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="WhatsApp"
-      className="text-[#25D366] transition hover:opacity-80"
-    >
-      <FaWhatsapp size={26} />
-    </a>
-
-    <a
-      href="https://instagram.com/tuo_profilo"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Instagram"
-      className="text-[#E4405F] transition hover:opacity-80"
-    >
-      <FaInstagram size={24} />
-    </a>
-
-    <a
-      href="https://facebook.com/tuapagina"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Facebook"
-      className="text-[#1877F2] transition hover:opacity-80"
-    >
-      <FaFacebookF size={22} />
-    </a>
-
-    <a
-      href="mailto:info@calicoodv.it"
-      aria-label="Email"
-      className="text-black transition hover:opacity-80"
-    >
-      <MdEmail size={28} />
-    </a>
-  </div>
-</div>
           </div>
         </div>
       </section>

@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { client } from '../../sanity/lib/client'
-import { allAnimalsQuery } from '../../sanity/lib/queries'
+import { allDogsQuery } from '../../sanity/lib/queries'
 import { urlFor } from '../../sanity/lib/image'
 
-type Animal = {
+type Dog = {
   _id: string
   name: string
   slug?: {
@@ -14,13 +14,60 @@ type Animal = {
   ageValue?: number
   ageUnit?: 'months' | 'years'
   image?: any
-  fivStatus?: 'positive' | 'negative' | 'not_tested'
-  felvStatus?: 'positive' | 'negative' | 'not_tested'
+  dogSize?: 'small' | 'medium' | 'large'
+  dogWeight?: number
+  dogBreed?: string
+  dogCoatLength?: 'short' | 'medium' | 'long'
+  isCrossbreedDog?: boolean
+  crossbreedDogDetails?: string
+  dogDewormed?: boolean
+  dogMicrochipped?: boolean
+  dogVaccinated?: boolean
+  dogSterilized?: boolean
 }
 
 const sexLabels: Record<string, string> = {
   male: 'Maschio',
   female: 'Femmina',
+}
+
+const dogSizeLabels: Record<string, string> = {
+  small: 'Taglia piccola',
+  medium: 'Taglia media',
+  large: 'Taglia grande',
+}
+
+const dogBreedLabels: Record<string, string> = {
+  mixed: 'Meticcio',
+  labrador: 'Labrador Retriever',
+  golden: 'Golden Retriever',
+  german_shepherd: 'Pastore Tedesco',
+  border_collie: 'Border Collie',
+  jack_russell: 'Jack Russell Terrier',
+  bulldog: 'Bulldog',
+  beagle: 'Beagle',
+  poodle: 'Barboncino',
+  chihuahua: 'Chihuahua',
+  cocker: 'Cocker Spaniel',
+  setter: 'Setter',
+  dalmatian: 'Dalmata',
+  rottweiler: 'Rottweiler',
+  dobermann: 'Dobermann',
+  husky: 'Husky Siberiano',
+  shih_tzu: 'Shih Tzu',
+  maltese: 'Maltese',
+  volpino: 'Volpino',
+  akita: 'Akita',
+  cane_corso: 'Cane Corso',
+  dachshund: 'Bassotto',
+  pug: 'Carlino',
+  weimaraner: 'Weimaraner',
+  great_dane: 'Alano',
+  pitbull: 'Pitbull',
+  amstaff: 'American Staffordshire Terrier',
+  segugio: 'Segugio',
+  greyhound: 'Levriero',
+  other: 'Altro / Non definita',
 }
 
 function formatAge(ageValue?: number, ageUnit?: 'months' | 'years') {
@@ -47,7 +94,7 @@ function getAgeGroup(ageValue?: number, ageUnit?: 'months' | 'years') {
   const ageInYears = getAgeInYears(ageValue, ageUnit)
 
   if (ageInYears === null) return 'adult'
-  if (ageInYears <= 1) return 'kitten'
+  if (ageInYears <= 1) return 'puppy'
   if (ageInYears >= 10) return 'senior'
   return 'adult'
 }
@@ -69,14 +116,14 @@ function SectionTitle({
   )
 }
 
-function CatCard({ animal }: { animal: Animal & { imageUrl?: string } }) {
+function DogCard({ dog }: { dog: Dog & { imageUrl?: string } }) {
   return (
     <article className="overflow-hidden border border-gray-200 bg-white">
       <div className="relative h-52 bg-[#F6F1E7]">
-        {animal.imageUrl ? (
+        {dog.imageUrl ? (
           <Image
-            src={animal.imageUrl}
-            alt={animal.name}
+            src={dog.imageUrl}
+            alt={dog.name}
             fill
             className="object-cover"
           />
@@ -88,20 +135,28 @@ function CatCard({ animal }: { animal: Animal & { imageUrl?: string } }) {
       </div>
 
       <div className="p-4">
-        <h3 className="mb-2 text-xl font-bold text-black">{animal.name}</h3>
+        <h3 className="mb-2 text-xl font-bold text-black">{dog.name}</h3>
 
-        <p className="mb-4 text-sm leading-6 text-gray-700">
-          {animal.sex ? sexLabels[animal.sex] : 'Sesso n.d.'}
+        <p className="mb-2 text-sm leading-6 text-gray-700">
+          {dog.sex ? sexLabels[dog.sex] : 'Sesso n.d.'}
           {' | '}
-          {formatAge(animal.ageValue, animal.ageUnit)}
+          {formatAge(dog.ageValue, dog.ageUnit)}
         </p>
 
-        {animal.slug?.current && (
+        <p className="mb-4 text-sm leading-6 text-gray-600">
+          {dog.dogSize ? dogSizeLabels[dog.dogSize] : 'Taglia n.d.'}
+          {dog.dogWeight ? ` | ${dog.dogWeight} kg` : ''}
+          {dog.dogBreed
+            ? ` | ${dogBreedLabels[dog.dogBreed] ?? dog.dogBreed}`
+            : ''}
+        </p>
+
+        {dog.slug?.current && (
           <Link
-            href={`/adozioni/${animal.slug.current}`}
+            href={`/adozioni/${dog.slug.current}`}
             className="inline-flex border border-black px-4 py-2 text-xs font-semibold uppercase tracking-wide text-black transition hover:bg-black hover:text-white"
           >
-            Scopri di più su {animal.name}
+            Scopri di più su {dog.name}
           </Link>
         )}
       </div>
@@ -112,45 +167,45 @@ function CatCard({ animal }: { animal: Animal & { imageUrl?: string } }) {
 function Section({
   titleFirst,
   titleSecond,
-  animals,
+  dogs,
 }: {
   titleFirst: string
   titleSecond: string
-  animals: (Animal & { imageUrl?: string })[]
+  dogs: (Dog & { imageUrl?: string })[]
 }) {
-  if (!animals.length) return null
+  if (!dogs.length) return null
 
   return (
     <section className="mb-14">
       <SectionTitle first={titleFirst} second={titleSecond} />
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {animals.map((animal) => (
-          <CatCard key={animal._id} animal={animal} />
+        {dogs.map((dog) => (
+          <DogCard key={dog._id} dog={dog} />
         ))}
       </div>
     </section>
   )
 }
 
-export default async function AdozioniPage() {
-  const animals = await client.fetch<Animal[]>(allAnimalsQuery)
+export default async function CaniPage() {
+  const dogs = await client.fetch<Dog[]>(allDogsQuery)
 
-  const mappedAnimals = animals.map((animal) => ({
-    ...animal,
-    imageUrl: animal.image
-      ? urlFor(animal.image).width(700).height(700).url()
+  const mappedDogs = dogs.map((dog) => ({
+    ...dog,
+    imageUrl: dog.image
+      ? urlFor(dog.image).width(700).height(700).url()
       : undefined,
   }))
 
-  const kittens = mappedAnimals.filter(
-    (animal) => getAgeGroup(animal.ageValue, animal.ageUnit) === 'kitten'
+  const puppies = mappedDogs.filter(
+    (dog) => getAgeGroup(dog.ageValue, dog.ageUnit) === 'puppy'
   )
-  const adults = mappedAnimals.filter(
-    (animal) => getAgeGroup(animal.ageValue, animal.ageUnit) === 'adult'
+  const adults = mappedDogs.filter(
+    (dog) => getAgeGroup(dog.ageValue, dog.ageUnit) === 'adult'
   )
-  const seniors = mappedAnimals.filter(
-    (animal) => getAgeGroup(animal.ageValue, animal.ageUnit) === 'senior'
+  const seniors = mappedDogs.filter(
+    (dog) => getAgeGroup(dog.ageValue, dog.ageUnit) === 'senior'
   )
 
   return (
@@ -161,9 +216,9 @@ export default async function AdozioniPage() {
             Associazione Calico ODV
           </p>
 
-         <h1 className="text-6xl font-black uppercase leading-none md:text-8xl">
+        <h1 className="text-6xl font-black uppercase leading-none md:text-8xl">
   <span className="text-black">Adozioni </span>
-  <span className="text-[#E4B15A]">Gatti</span>
+  <span className="text-[#E4B15A]">Cani</span>
 </h1>
 
           <div className="mt-5 h-3 w-44 bg-[#E4B15A]" />
@@ -175,17 +230,17 @@ export default async function AdozioniPage() {
           <div className="grid min-h-[340px] grid-cols-1 md:grid-cols-2">
             <div className="flex flex-col justify-center bg-white p-8 text-black md:p-12">
               <h2 className="text-3xl font-bold leading-tight md:text-4xl">
-                Tutti i gatti che cercano casa
+                Tutti i cani che cercano casa
               </h2>
 
               <p className="mt-4 max-w-xl text-sm leading-6 text-black/75">
-                Qui sotto puoi vedere tutti i gatti a cui stiamo cercando di
+                Qui sotto puoi vedere tutti i cani a cui stiamo cercando di
                 trovare casa, divisi in cuccioli, adulti e anziani per aiutarti
                 a orientarti meglio.
               </p>
 
               <p className="mt-3 max-w-xl text-sm leading-6 text-black/75">
-                In ogni scheda troverai il rimando alla pagina del gatto su
+                In ogni scheda troverai il rimando alla pagina del cane su
                 Empethy per procedere con la richiesta di adozione oppure per
                 chiederci ulteriori informazioni.
               </p>
@@ -193,8 +248,8 @@ export default async function AdozioniPage() {
 
             <div className="relative min-h-[260px]">
               <Image
-                src="/gatto-5.jpg"
-                alt="Gatti in adozione"
+                src="/cane-1.jpg"
+                alt="Cani in adozione"
                 fill
                 className="object-cover"
               />
@@ -204,7 +259,7 @@ export default async function AdozioniPage() {
           <div className="grid min-h-[340px] grid-cols-1 md:grid-cols-2">
             <div className="relative min-h-[260px]">
               <Image
-                src="/gatto-6.jpg"
+                src="/cane-2.jpg"
                 alt="Adozione tramite Empethy"
                 fill
                 className="object-cover"
@@ -238,9 +293,9 @@ export default async function AdozioniPage() {
       </div>
 
       <section className="mx-auto max-w-7xl px-6 pb-14">
-        <Section titleFirst="Gatti" titleSecond="Cuccioli" animals={kittens} />
-        <Section titleFirst="Gatti" titleSecond="Adulti" animals={adults} />
-        <Section titleFirst="Gatti" titleSecond="Anziani" animals={seniors} />
+        <Section titleFirst="Cani" titleSecond="Cuccioli" dogs={puppies} />
+        <Section titleFirst="Cani" titleSecond="Adulti" dogs={adults} />
+        <Section titleFirst="Cani" titleSecond="Anziani" dogs={seniors} />
       </section>
     </main>
   )

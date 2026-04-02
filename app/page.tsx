@@ -41,7 +41,7 @@ export default function Home() {
 
           <div className="mt-8 space-y-4 text-[15px] leading-7 text-gray-700 md:text-base">
             <p>
-L’Associazione Calico odv è costituita da un gruppo di volontari attivi su tutto il territorio del Lazio. Il nostro obiettivo? Non lasciare solo nessun animale bisognoso. A Nepi, in provincia di Viterbo abbiamo ceeato la Gatteria, un piccolo rifugio dove accogliamo gatti abbandonati e gli troviamo una famiglia. A Roma ci occupiamo dei gatti ospitati presso ValleGrande.Vigiliamo sul loro benessere e promuoviamo le adozioni di gatti e cani ospiti della struttura.             </p>
+L’Associazione Calico odv è costituita da un gruppo di volontarie e volontari attivi su tutto il territorio del Lazio. Il nostro obiettivo? Non lasciare solo nessun animale bisognoso. A Nepi, in provincia di Viterbo abbiamo creato la Gatteria, un piccolo rifugio dove accogliamo gatti abbandonati e gli troviamo una famiglia. A Roma ci occupiamo dei gatti ospitati presso ValleGrande. Vigiliamo sul loro benessere e promuoviamo le adozioni di gatti e cani ospiti della struttura.             </p>
           </div>
         </div>
 
@@ -111,14 +111,11 @@ L’Associazione Calico odv è costituita da un gruppo di volontari attivi su tu
 
             <div className="flex flex-col justify-center bg-[#E4B15A] p-10 text-black md:p-14">
               <h3 className="text-3xl font-bold leading-tight md:text-4xl">
-                Vuoi adottare un gatto?
+                Vuoi adottare un gatto o un cane?
               </h3>
 
               <p className="mt-5 max-w-xl text-sm leading-6 md:text-[15px]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                habitant morbi tristique senectus et netus et malesuada fames ac
-                turpis egestas. Integer convallis est sed fermentum malesuada.
-                Sed viverra nunc id sem feugiat.
+                Non cercare la perfezione, cerca l'emozione. Fatti guidare dal cuore e lasciati trovare: perché alla fine, sono sempre loro a sceglierci.
               </p>
 
               <div className="mt-6">
@@ -135,7 +132,7 @@ L’Associazione Calico odv è costituita da un gruppo di volontari attivi su tu
           <div className="grid min-h-[420px] grid-cols-1 md:grid-cols-2">
             <div className="flex flex-col justify-center bg-[#1F3B2D] p-10 text-white md:order-1 md:p-14">
               <h3 className="text-3xl font-bold leading-tight md:text-4xl">
-                Diventa una/o volontaria/o
+                Diventa una/un volontaria/o
               </h3>
 
               <p className="mt-5 max-w-xl text-sm leading-6 text-white/90 md:text-[15px]">
@@ -180,9 +177,7 @@ L’Associazione Calico odv è costituita da un gruppo di volontari attivi su tu
               </h3>
 
               <p className="mt-5 max-w-xl text-sm leading-6 text-white/90 md:text-[15px]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-                posuere sapien nec luctus tincidunt. Curabitur non augue sed lacus
-                varius. Donec tincidunt lectus et tempor dignissim.
+                Basta davvero poco per aiutarci ad aiutarli. Anche il valore di pochi euro può garantire cure e cibo a chi è stato meno fortunato: ogni goccia conta!
               </p>
 
               <div className="mt-6">
