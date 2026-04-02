@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { client } from '../../sanity/lib/client'
-import { allAnimalsQuery } from '../../sanity/lib/queries'
+import { availableCatsQuery } from '../../sanity/lib/queries'
 import { urlFor } from '../../sanity/lib/image'
 
 type Animal = {
@@ -10,12 +10,14 @@ type Animal = {
   slug?: {
     current: string
   }
+  species?: 'cat' | 'dog'
   sex?: 'male' | 'female'
   ageValue?: number
   ageUnit?: 'months' | 'years'
   image?: any
   fivStatus?: 'positive' | 'negative' | 'not_tested'
   felvStatus?: 'positive' | 'negative' | 'not_tested'
+  adoptionStatus?: 'available' | 'adopted'
 }
 
 const sexLabels: Record<string, string> = {
@@ -134,7 +136,7 @@ function Section({
 }
 
 export default async function AdozioniPage() {
-  const animals = await client.fetch<Animal[]>(allAnimalsQuery)
+  const animals = await client.fetch<Animal[]>(availableCatsQuery)
 
   const mappedAnimals = animals.map((animal) => ({
     ...animal,
@@ -161,10 +163,10 @@ export default async function AdozioniPage() {
             Associazione Calico ODV
           </p>
 
-         <h1 className="text-6xl font-black uppercase leading-none md:text-8xl">
-  <span className="text-black">Adozioni </span>
-  <span className="text-[#E4B15A]">Gatti</span>
-</h1>
+          <h1 className="text-6xl font-black uppercase leading-none md:text-8xl">
+            <span className="text-black">Adozioni </span>
+            <span className="text-[#E4B15A]">Gatti</span>
+          </h1>
 
           <div className="mt-5 h-3 w-44 bg-[#E4B15A]" />
         </div>

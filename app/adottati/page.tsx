@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { client } from '../../sanity/lib/client'
 import { adoptedAnimalsQuery } from '../../sanity/lib/queries'
 import { urlFor } from '../../sanity/lib/image'
@@ -87,17 +86,6 @@ function AdoptedCard({ animal }: { animal: Animal & { imageUrl?: string } }) {
           {' | '}
           {formatAge(animal.ageValue, animal.ageUnit)}
         </p>
-
-        {animal.slug?.current && (
-          <div className="mt-4">
-            <Link
-              href={`/adozioni/${animal.slug.current}`}
-              className="inline-flex border border-black px-4 py-2 text-xs font-semibold uppercase tracking-wide text-black transition hover:bg-black hover:text-white"
-            >
-              Scopri di più su {animal.name}
-            </Link>
-          </div>
-        )}
       </div>
     </article>
   )

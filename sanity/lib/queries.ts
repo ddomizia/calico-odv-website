@@ -157,3 +157,10 @@ export const allEventsQuery = `
     poster
   }
 `
+export const availableCatsQuery = `
+  *[
+    _type == "animal" &&
+    species == "cat" &&
+    adoptionStatus == "available"
+  ] | order(name asc)
+`
