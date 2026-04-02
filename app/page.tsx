@@ -136,7 +136,7 @@ L’Associazione Calico odv è costituita da un gruppo di volontarie e volontari
               </h3>
 
               <p className="mt-5 max-w-xl text-sm leading-6 text-white/90 md:text-[15px]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+                Lorem ipsu dolor sit amet, consectetur adipiscing elit. Integer
                 posuere sapien nec luctus tincidunt. Curabitur non augue sed lacus
                 varius fermentum. Sed viverra nunc id sem feugiat.
               </p>
