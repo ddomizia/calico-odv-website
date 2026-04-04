@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { HeartPulse } from 'lucide-react'
 import { client } from '../../sanity/lib/client'
 import { adoptedAnimalsQuery } from '../../sanity/lib/queries'
 import { urlFor } from '../../sanity/lib/image'
@@ -11,9 +12,12 @@ type Animal = {
   }
   species?: 'cat' | 'dog'
   sex?: 'male' | 'female'
-  ageValue?: number
-  ageUnit?: 'months' | 'years'
+  birthMonth?: number
+  birthYear?: number
   image?: any
+  fivStatus?: 'positive' | 'negative' | 'not_tested'
+  felvStatus?: 'positive' | 'negative' | 'not_tested'
+  specialConditions?: string[]
 }
 
 const sexLabels: Record<string, string> = {
@@ -31,14 +35,30 @@ const speciesBadgeClasses: Record<string, string> = {
   dog: 'bg-[#1F3B2D] text-white',
 }
 
-function formatAge(ageValue?: number, ageUnit?: 'months' | 'years') {
-  if (ageValue === undefined || ageValue === null) return 'Età n.d.'
+function formatAgeFromBirth(birthMonth?: number, birthYear?: number) {
+  if (!birthMonth || !birthYear) return 'Età n.d.'
 
-  if (ageUnit === 'months') {
-    return `${ageValue} ${ageValue === 1 ? 'mese' : 'mesi'}`
+  const now = new Date()
+  const currentMonth = now.getMonth() + 1
+  const currentYear = now.getFullYear()
+
+  const totalMonths =
+    (currentYear - birthYear) * 12 + (currentMonth - birthMonth)
+
+  if (totalMonths < 0) return 'Età n.d.'
+
+  const years = Math.floor(totalMonths / 12)
+  const months = totalMonths % 12
+
+  if (years === 0) {
+    return `${months} ${months === 1 ? 'mese' : 'mesi'}`
   }
 
-  return `${ageValue} ${ageValue === 1 ? 'anno' : 'anni'}`
+  if (months === 0) {
+    return `${years} ${years === 1 ? 'anno' : 'anni'}`
+  }
+
+  return `${years} ${years === 1 ? 'anno' : 'anni'} e ${months} ${months === 1 ? 'mese' : 'mesi'}`
 }
 
 function AdoptedCard({ animal }: { animal: Animal & { imageUrl?: string } }) {
@@ -46,6 +66,24 @@ function AdoptedCard({ animal }: { animal: Animal & { imageUrl?: string } }) {
   const speciesBadgeClass = animal.species
     ? speciesBadgeClasses[animal.species]
     : 'bg-black text-white'
+
+  const hasPositiveViralStatus =
+    animal.species === 'cat' &&
+    (animal.fivStatus === 'positive' || animal.felvStatus === 'positive')
+
+  const viralBadgeLabel =
+    animal.fivStatus === 'positive' && animal.felvStatus === 'positive'
+      ? 'FIV+ / FeLV+'
+      : animal.fivStatus === 'positive'
+      ? 'FIV+'
+      : animal.felvStatus === 'positive'
+      ? 'FeLV+'
+      : null
+
+  const hasSpecialNeeds =
+    animal.species === 'cat' &&
+    animal.specialConditions &&
+    animal.specialConditions.length > 0
 
   return (
     <article className="overflow-hidden border border-gray-200 bg-white">
@@ -79,12 +117,28 @@ function AdoptedCard({ animal }: { animal: Animal & { imageUrl?: string } }) {
       </div>
 
       <div className="p-4">
-        <h3 className="mb-2 text-xl font-bold text-black">{animal.name}</h3>
+        <div className="mb-2 flex flex-wrap items-center gap-2">
+          <h3 className="text-xl font-bold text-black">{animal.name}</h3>
+
+          {hasPositiveViralStatus && viralBadgeLabel && (
+            <span className="inline-flex items-center gap-1 rounded-full border border-red-200 bg-red-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-red-700">
+              <HeartPulse size={12} />
+              {viralBadgeLabel}
+            </span>
+          )}
+
+          {hasSpecialNeeds && (
+            <span className="inline-flex items-center gap-1 rounded-full border border-[#E4B15A]/50 bg-[#FDF6E8] px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-[#C96B3C]">
+              <HeartPulse size={12} />
+              Adozione del cuore
+            </span>
+          )}
+        </div>
 
         <p className="text-sm leading-6 text-gray-700">
           {animal.sex ? sexLabels[animal.sex] : 'Sesso n.d.'}
           {' | '}
-          {formatAge(animal.ageValue, animal.ageUnit)}
+          {formatAgeFromBirth(animal.birthMonth, animal.birthYear)}
         </p>
       </div>
     </article>

@@ -22,40 +22,27 @@ export default function DiventaVolontarioPage() {
               <span className="text-white">Diventa </span>
               <span className="text-[#E4B15A]">volontario</span>
             </h1>
-          </div>
-        </div>
-      </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-14">
-        <div className="mb-14 max-w-4xl">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-[#E4B15A]">
-            Associazione Calico ODV
-          </p>
+            <div className="mt-8 max-w-3xl bg-white/10 px-5 py-4 backdrop-blur-sm">
+              <p className="text-sm leading-6 text-white md:text-[15px]">
+                Chiunque può diventare volontario: non ci sono limiti di nessun
+                tipo. Cerchiamo persone che amano gli animali e che desiderano
+                mettere a disposizione un po’ del proprio tempo e delle proprie
+                energie.
+              </p>
 
-          <h2 className="text-4xl font-black leading-none text-black md:text-5xl">
-            C’è spazio anche per te
-          </h2>
-
-          <div className="mt-5 h-3 w-44 bg-[#E4B15A]" />
-
-          <div className="mt-8 space-y-4 text-sm leading-6 text-gray-700 md:text-[15px]">
-            <p>
-              Chiunque può diventare volontario: non ci sono limiti di nessun tipo.
-              Cerchiamo persone che amano gli animali e che desiderano mettere a
-              disposizione un po’ del proprio tempo e delle proprie energie.
-            </p>
-
-            <p>
-              Ogni aiuto è importante, anche il più piccolo. Ognuno può contribuire
-              in modo diverso, in base alle proprie disponibilità e capacità.
-            </p>
+              <p className="mt-4 text-sm leading-6 text-white md:text-[15px]">
+                Ogni aiuto è importante, anche il più piccolo. Ognuno può
+                contribuire in modo diverso, in base alle proprie disponibilità e
+                capacità.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="w-full bg-[#FCFBF8]">
         <div className="space-y-0">
-
           <div className="grid min-h-[340px] grid-cols-1 md:grid-cols-2">
             <div className="flex flex-col justify-center bg-[#E4B15A] p-8 text-black md:p-12">
               <h2 className="text-3xl font-bold leading-tight md:text-4xl">
@@ -174,7 +161,6 @@ export default function DiventaVolontarioPage() {
               <Image src="/chi-siamo.jpg" alt="" fill className="object-cover" />
             </div>
           </div>
-
         </div>
       </section>
 
@@ -200,7 +186,7 @@ export default function DiventaVolontarioPage() {
             </a>
 
             <a
-              href="https://instagram.com/tuo_profilo"
+              href="https://www.instagram.com/associazionecalico"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#E4405F] hover:opacity-80"
@@ -209,7 +195,7 @@ export default function DiventaVolontarioPage() {
             </a>
 
             <a
-              href="https://facebook.com/tuapagina"
+              href="https://www.facebook.com/associazionecalico/?locale=it_IT"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#1877F2] hover:opacity-80"
@@ -218,7 +204,7 @@ export default function DiventaVolontarioPage() {
             </a>
 
             <a
-              href="mailto:info@calicoodv.it"
+              href="mailto:calicoassociazione@gmail.com"
               className="text-white hover:opacity-80"
             >
               <MdEmail size={30} />

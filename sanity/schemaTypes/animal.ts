@@ -87,7 +87,6 @@ export const animal = defineType({
   title: 'Animali',
   type: 'document',
   fields: [
-    // CAMPI COMUNI
     defineField({
       name: 'name',
       title: 'Nome',
@@ -139,23 +138,28 @@ export const animal = defineType({
     }),
 
     defineField({
-      name: 'ageValue',
-      title: 'Età (numero)',
+      name: 'birthMonth',
+      title: 'Mese di nascita',
       type: 'number',
-      validation: (Rule) => Rule.min(0),
+      validation: (Rule) =>
+        Rule.required()
+          .integer()
+          .min(1)
+          .max(12)
+          .error('Inserisci un mese da 1 a 12'),
+      description: 'Inserisci il numero del mese: 1 = gennaio, 12 = dicembre',
     }),
 
     defineField({
-      name: 'ageUnit',
-      title: 'Unità età',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Mesi', value: 'months' },
-          { title: 'Anni', value: 'years' },
-        ],
-        layout: 'radio',
-      },
+      name: 'birthYear',
+      title: 'Anno di nascita',
+      type: 'number',
+      validation: (Rule) =>
+        Rule.required()
+          .integer()
+          .min(2000)
+          .max(new Date().getFullYear())
+          .error('Inserisci un anno valido'),
     }),
 
     defineField({
@@ -184,7 +188,6 @@ export const animal = defineType({
       type: 'text',
     }),
 
-    // CAMPI GATTO
     defineField({
       name: 'coatLength',
       title: 'Tipo di pelo',
@@ -320,7 +323,6 @@ export const animal = defineType({
       hidden: ({ document }) => document?.species !== 'cat',
     }),
 
-    // CAMPI CANE
     defineField({
       name: 'dogSize',
       title: 'Taglia',
@@ -416,18 +418,19 @@ export const animal = defineType({
       hidden: ({ document }) => document?.species !== 'dog',
       initialValue: false,
     }),
+
     defineField({
-  name: 'adoptionStatus',
-  title: 'Stato adozione',
-  type: 'string',
-  initialValue: 'available',
-  options: {
-    list: [
-      { title: 'Disponibile', value: 'available' },
-      { title: 'Adottato', value: 'adopted' },
-    ],
-    layout: 'radio',
-  },
-}),
+      name: 'adoptionStatus',
+      title: 'Stato adozione',
+      type: 'string',
+      initialValue: 'available',
+      options: {
+        list: [
+          { title: 'Disponibile', value: 'available' },
+          { title: 'Adottato', value: 'adopted' },
+        ],
+        layout: 'radio',
+      },
+    }),
   ],
 })

@@ -95,40 +95,47 @@ export default function GatteriaPage() {
               </p>
 
               <div className="mt-6">
-  <Image
-    src="/catlives.svg"
-    alt="CatLives"
-    width={120}
-    height={40}
-    className="mb-4 object-contain"
+                <Image
+                  src="/catlives.svg"
+                  alt="CatLives"
+                  width={120}
+                  height={40}
+                  className="mb-4 object-contain"
+                />
+
+                <a
+                  href="https://catlives.org/en/shelters/la-gatteria"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex bg-[#1F3B2D] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90"
+                >
+                  Guarda La Gatteria su CatLives
+                </a>
+              </div>
+            </div>
+
+           <div className="relative min-h-[260px] bg-black">
+ <div className="relative min-h-[260px] bg-black">
+  <iframe
+    loading="lazy"
+    src="https://services.skylinewebcams.com/?w=228001"
+    className="absolute inset-0 h-full w-full"
+    frameBorder="0"
+    scrolling="no"
+    marginWidth={0}
+    marginHeight={0}
+    allow="autoplay; fullscreen"
+    allowFullScreen
   />
-
-  <a
-    href="https://catlives.org/en/shelters/la-gatteria"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="inline-flex bg-[#1F3B2D] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90"
-  >
-    Guarda La Gatteria su CatLives
-  </a>
 </div>
-            </div>
-
-            <div className="relative min-h-[260px]">
-              <Image
-                src="/catlives.png"
-                alt="CatLives e i gatti della Gatteria"
-                fill
-                className="object-cover"
-              />
-            </div>
+</div>
           </div>
 
           <div className="grid min-h-[340px] grid-cols-1 md:grid-cols-2">
-            <div className="relative min-h-[260px]">
+            <div className="relative min-h-[260px] bg-[#F3E6CC]">
               <Image
-                src="/gatto-9.jpg"
-                alt="Adotta dalla Gatteria"
+                src="/catlives.png"
+                alt="CatLives e i gatti della Gatteria"
                 fill
                 className="object-cover"
               />

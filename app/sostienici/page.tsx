@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { FaPaypal, FaWhatsapp, FaInstagram, FaFacebookF } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
+import { Check, X } from 'lucide-react'
 import StatsStrip from '@/components/home/StatsStrip'
 
 export default function SostieniciPage() {
@@ -206,7 +207,7 @@ export default function SostieniciPage() {
             <div className="relative min-h-[260px]">
               <Image
                 src="/gatto-6.jpg"
-                alt="Dona coperte e oggetti utili"
+                alt="Dona coperte e materiali utili"
                 fill
                 className="object-cover"
               />
@@ -214,18 +215,80 @@ export default function SostieniciPage() {
 
             <div className="flex flex-col justify-center bg-[#F3E6CC] p-8 text-black md:p-12">
               <h2 className="text-3xl font-bold leading-tight md:text-4xl">
-                Dona anche coperte, vestiti e mobili vecchi
+                Dona coperte e materiali utili
               </h2>
 
               <p className="mt-4 max-w-xl text-sm leading-6 text-black/80">
-                Accettiamo anche coperte, asciugamani, vestiti e mobili che
-                possano essere utili per i nostri spazi o per raccogliere fondi
-                a sostegno dell&apos;associazione.
+                Puoi aiutarci anche donando materiali utili per i nostri spazi e
+                per il benessere degli animali che seguiamo ogni giorno.
               </p>
 
-              <p className="mt-3 max-w-xl text-sm leading-6 text-black/80">
-                Non esitare a contattarci sui nostri social, su WhatsApp o via
-                mail per accordarti con noi e consegnarci queste cose.
+              <div className="mt-6 grid gap-4 md:grid-cols-2">
+                <div className="border border-black/10 bg-white/70 p-4">
+                  <p className="mb-3 text-sm font-bold uppercase tracking-wide text-[#1F3B2D]">
+                    Cosa accettiamo
+                  </p>
+
+                  <div className="space-y-3 text-sm leading-6 text-black/80">
+                    <div className="flex items-start gap-2">
+                      <Check size={16} className="mt-1 shrink-0 text-[#1F3B2D]" />
+                      <span>Coperte</span>
+                    </div>
+
+                    <div className="flex items-start gap-2">
+                      <Check size={16} className="mt-1 shrink-0 text-[#1F3B2D]" />
+                      <span>Lenzuola</span>
+                    </div>
+
+                    <div className="flex items-start gap-2">
+                      <Check size={16} className="mt-1 shrink-0 text-[#1F3B2D]" />
+                      <span>Asciugamani</span>
+                    </div>
+
+                    <div className="flex items-start gap-2">
+                      <Check size={16} className="mt-1 shrink-0 text-[#1F3B2D]" />
+                      <span>Maglioni</span>
+                    </div>
+
+                    <div className="flex items-start gap-2">
+                      <Check size={16} className="mt-1 shrink-0 text-[#1F3B2D]" />
+                      <span>Cuscini da sedia</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border border-black/10 bg-white/70 p-4">
+                  <p className="mb-3 text-sm font-bold uppercase tracking-wide text-[#C96B3C]">
+                    Cosa non accettiamo
+                  </p>
+
+                  <div className="space-y-3 text-sm leading-6 text-black/80">
+                    <div className="flex items-start gap-2">
+                      <X size={16} className="mt-1 shrink-0 text-[#C96B3C]" />
+                      <span>Materassi</span>
+                    </div>
+
+                    <div className="flex items-start gap-2">
+                      <X size={16} className="mt-1 shrink-0 text-[#C96B3C]" />
+                      <span>Cuscini da letto</span>
+                    </div>
+
+                    <div className="flex items-start gap-2">
+                      <X size={16} className="mt-1 shrink-0 text-[#C96B3C]" />
+                      <span>Tappeti</span>
+                    </div>
+
+                    <div className="flex items-start gap-2">
+                      <X size={16} className="mt-1 shrink-0 text-[#C96B3C]" />
+                      <span>Vestiti</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p className="mt-5 max-w-xl text-sm leading-6 text-black/80">
+                Per accordarti con noi sulla consegna, contattaci sui nostri
+                social, su WhatsApp o via mail.
               </p>
 
               <div className="mt-6 flex items-center gap-5">

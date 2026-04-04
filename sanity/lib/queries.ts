@@ -6,8 +6,8 @@ export const featuredAnimalsQuery = `
     slug,
     species,
     sex,
-    ageValue,
-    ageUnit,
+    birthMonth,
+    birthYear,
     description,
     image,
 
@@ -47,8 +47,8 @@ export const allAnimalsQuery = `
     slug,
     species,
     sex,
-    ageValue,
-    ageUnit,
+    birthMonth,
+    birthYear,
     description,
     image,
 
@@ -73,8 +73,8 @@ export const allDogsQuery = `
     slug,
     species,
     sex,
-    ageValue,
-    ageUnit,
+    birthMonth,
+    birthYear,
     description,
     image,
 
@@ -99,8 +99,8 @@ export const animalBySlugQuery = `
     slug,
     species,
     sex,
-    ageValue,
-    ageUnit,
+    birthMonth,
+    birthYear,
     hostLocation,
     description,
     image,
@@ -133,6 +133,7 @@ export const animalBySlugQuery = `
     dogSterilized
   }
 `
+
 export const adoptedAnimalsQuery = `
   *[_type == "animal" && adoptionStatus == "adopted"] | order(name asc) {
     _id,
@@ -140,11 +141,15 @@ export const adoptedAnimalsQuery = `
     slug,
     species,
     sex,
-    ageValue,
-    ageUnit,
-    image
+    birthMonth,
+    birthYear,
+    image,
+    fivStatus,
+    felvStatus,
+    specialConditions
   }
 `
+
 export const allEventsQuery = `
   *[_type == "event"] | order(date asc) {
     _id,
@@ -157,10 +162,36 @@ export const allEventsQuery = `
     poster
   }
 `
+
 export const availableCatsQuery = `
   *[
     _type == "animal" &&
     species == "cat" &&
     adoptionStatus == "available"
-  ] | order(name asc)
+  ] | order(name asc) {
+    _id,
+    name,
+    slug,
+    species,
+    sex,
+    birthMonth,
+    birthYear,
+    hostLocation,
+    description,
+    image,
+    empethyUrl,
+
+    coatLength,
+    breed,
+    isCrossbreed,
+    crossbreedDetails,
+    dewormed,
+    microchipped,
+    vaccinated,
+    sterilized,
+    fivStatus,
+    felvStatus,
+    specialConditions,
+    healthNotes
+  }
 `

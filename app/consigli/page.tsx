@@ -5,20 +5,19 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {
   AlertTriangle,
-  Bath,
   Cat,
   DoorClosed,
   HeartHandshake,
   Home,
   ShoppingBag,
   ShieldAlert,
-  Syringe,
-  Wind,
-  X,
   PawPrint,
   Heart,
   Users,
   Smile,
+  HeartPulse,
+  Stethoscope,
+  X,
 } from 'lucide-react'
 
 type AdviceCard = {
@@ -67,6 +66,41 @@ function TopicCard({
         Apri la scheda
       </span>
     </button>
+  )
+}
+
+function EmptyTopicCard({
+  title,
+  subtitle,
+  icon: Icon,
+  accent,
+}: {
+  title: string
+  subtitle: string
+  icon: React.ElementType
+  accent: string
+}) {
+  return (
+    <div className="flex h-full flex-col justify-between border border-dashed border-black/15 bg-white/70 p-6 text-left">
+      <div>
+        <div
+          className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full"
+          style={{ backgroundColor: accent }}
+        >
+          <Icon size={22} className="text-black" />
+        </div>
+
+        <h3 className="text-2xl font-black uppercase leading-tight text-black">
+          {title}
+        </h3>
+
+        <p className="mt-3 text-sm leading-6 text-gray-700">{subtitle}</p>
+      </div>
+
+      <span className="mt-8 inline-flex text-sm font-bold uppercase tracking-wide text-black/40">
+        Schede in arrivo
+      </span>
+    </div>
   )
 }
 
@@ -170,7 +204,7 @@ function Modal({
 export default function ConsigliPage() {
   const [openCard, setOpenCard] = useState<string | null>(null)
 
-  const cards: AdviceCard[] = [
+  const adviceCards: AdviceCard[] = [
     {
       id: 'adozione',
       title: 'I nostri consigli per la tua adozione',
@@ -321,7 +355,7 @@ export default function ConsigliPage() {
     },
   ]
 
-  const activeCard = cards.find((card) => card.id === openCard)
+  const activeCard = adviceCards.find((card) => card.id === openCard)
 
   return (
     <main className="min-h-screen bg-[#FCFBF8]">
@@ -337,60 +371,87 @@ export default function ConsigliPage() {
         <div className="absolute inset-0 bg-black/50" />
 
         <div className="relative z-10 mx-auto flex min-h-[560px] max-w-7xl items-center px-6 py-16">
-          <div className="max-w-4xl">
+          <div className="max-w-5xl">
             <h1 className="text-5xl font-black uppercase leading-none tracking-tight md:text-7xl">
               <span className="text-white">I nostri </span>
               <span className="text-[#E4B15A]">consigli</span>
             </h1>
-          </div>
-        </div>
-      </section>
 
-      <section className="w-full bg-white py-14">
-        <div className="mx-auto max-w-7xl px-6">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-[#E4B15A]">
-            Associazione Calico ODV
-          </p>
-
-          <h2 className="text-4xl font-black uppercase leading-none text-black md:text-5xl">
-            Schede utili per chi adotta
-          </h2>
-
-          <div className="mt-5 h-3 w-44 bg-[#E4B15A]" />
-
-          <div className="mt-8 max-w-4xl space-y-4 text-sm leading-6 text-gray-700 md:text-[15px]">
-            <p>
-              In questa pagina trovi schede tematiche pensate per raccogliere i
-              consigli più utili in modo chiaro e consultabile. L’idea è quella di
-              aggiungere nel tempo sempre più argomenti, così da creare uno spazio
-              pratico per chi si avvicina all’adozione o ha bisogno di orientarsi.
-            </p>
+            <div className="mt-8 max-w-3xl bg-white/10 px-5 py-4 backdrop-blur-sm">
+              <p className="text-sm leading-6 text-white md:text-[15px]">
+                In questa pagina trovi schede tematiche pensate per raccogliere i
+                consigli più utili in modo chiaro e consultabile. L’idea è quella
+                di aggiungere nel tempo sempre più argomenti, così da creare uno
+                spazio pratico per chi si avvicina all’adozione o ha bisogno di
+                orientarsi.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="w-full bg-[#F3E6CC] py-14">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-10 max-w-4xl">
-            <h2 className="text-3xl font-black uppercase leading-none text-black md:text-4xl">
-              Esplora le schede
-            </h2>
-            <p className="mt-4 text-sm leading-6 text-black/75 md:text-[15px]">
-              Clicca su una scheda per aprire il contenuto completo.
-            </p>
-          </div>
+          <div className="grid gap-10 lg:grid-cols-2">
+            <div className="border border-black/10 bg-[#FCFBF8] p-6 md:p-8">
+              <div className="mb-8 max-w-2xl">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#C96B3C]">
+                  I nostri consigli
+                </p>
+                <h2 className="mt-3 text-3xl font-black uppercase leading-none text-black md:text-4xl">
+                  Schede pratiche per l’adozione
+                </h2>
+                <p className="mt-4 text-sm leading-6 text-black/75 md:text-[15px]">
+                  Qui trovi le schede dedicate alla gestione dell’adozione, ai
+                  primi giorni in casa e alla convivenza quotidiana con i gatti.
+                </p>
+              </div>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {cards.map((card) => (
-              <TopicCard
-                key={card.id}
-                title={card.title}
-                subtitle={card.subtitle}
-                icon={card.icon}
-                accent={card.accent}
-                onClick={() => setOpenCard(card.id)}
-              />
-            ))}
+              <div className="grid gap-6 md:grid-cols-1 xl:grid-cols-2">
+                {adviceCards.map((card) => (
+                  <TopicCard
+                    key={card.id}
+                    title={card.title}
+                    subtitle={card.subtitle}
+                    icon={card.icon}
+                    accent={card.accent}
+                    onClick={() => setOpenCard(card.id)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="border border-black/10 bg-white p-6 md:p-8">
+              <div className="mb-8 max-w-2xl">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#1F3B2D]">
+                  Salute e approfondimenti
+                </p>
+                <h2 className="mt-3 text-3xl font-black uppercase leading-none text-black md:text-4xl">
+                  Scopri di più sulle principali malattie dei gatti
+                </h2>
+                <p className="mt-4 text-sm leading-6 text-gray-700 md:text-[15px]">
+                  In questa sezione raccoglieremo schede dedicate ai temi sanitari
+                  più importanti, per aiutarti a comprendere meglio alcune
+                  condizioni frequenti e adottare con maggiore consapevolezza.
+                </p>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-1 xl:grid-cols-2">
+                <EmptyTopicCard
+                  title="Schede in arrivo"
+                  subtitle="Presto troverai qui approfondimenti chiari e accessibili su FIV, FeLV e altre condizioni importanti da conoscere."
+                  icon={HeartPulse}
+                  accent="#E4B15A"
+                />
+
+                <EmptyTopicCard
+                  title="Spazio dedicato alla salute"
+                  subtitle="Questa area sarà ampliata progressivamente con contenuti pensati per orientare chi adotta senza creare allarmismi inutili."
+                  icon={Stethoscope}
+                  accent="#D8C3A5"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

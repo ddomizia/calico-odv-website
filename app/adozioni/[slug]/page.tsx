@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import {
-  Calendar,
+  CakeSlice,
   HeartPulse,
   MapPin,
   Mars,
@@ -32,14 +32,13 @@ type Animal = {
   }
   species?: 'cat' | 'dog'
   sex?: 'male' | 'female'
-  ageValue?: number
-  ageUnit?: 'months' | 'years'
+  birthMonth?: number
+  birthYear?: number
   hostLocation?: string
   description?: string
   image?: any
   empethyUrl?: string
 
-  // GATTI
   coatLength?: 'short' | 'medium' | 'long'
   breed?: string
   isCrossbreed?: boolean
@@ -53,7 +52,6 @@ type Animal = {
   specialConditions?: string[]
   healthNotes?: string
 
-  // CANI
   dogSize?: 'small' | 'medium' | 'large'
   dogWeight?: number
   dogCoatLength?: 'short' | 'medium' | 'long'
@@ -185,20 +183,37 @@ const conditionLabels: Record<string, string> = {
   paralisi_parziale: 'Paralisi parziale',
 }
 
-function formatAge(ageValue?: number, ageUnit?: 'months' | 'years') {
-  if (ageValue === undefined || ageValue === null) return null
+function formatAgeFromBirth(birthMonth?: number, birthYear?: number) {
+  if (!birthMonth || !birthYear) return null
 
-  if (ageUnit === 'months') {
-    return `${ageValue} ${ageValue === 1 ? 'mese' : 'mesi'}`
+  const now = new Date()
+  const currentMonth = now.getMonth() + 1
+  const currentYear = now.getFullYear()
+
+  let totalMonths =
+    (currentYear - birthYear) * 12 + (currentMonth - birthMonth)
+
+  if (totalMonths < 0) return null
+
+  const years = Math.floor(totalMonths / 12)
+  const months = totalMonths % 12
+
+  if (years === 0) {
+    return `${months} ${months === 1 ? 'mese' : 'mesi'}`
   }
 
-  return `${ageValue} ${ageValue === 1 ? 'anno' : 'anni'}`
+  if (months === 0) {
+    return `${years} ${years === 1 ? 'anno' : 'anni'}`
+  }
+
+  return `${years} ${years === 1 ? 'anno' : 'anni'} e ${months} ${months === 1 ? 'mese' : 'mesi'}`
 }
 
 type DetailItem = {
   key: string
   icon: ReactNode
   text: string
+  highlighted?: boolean
 }
 
 export default async function AnimalPage({
@@ -214,19 +229,37 @@ export default async function AnimalPage({
     notFound()
   }
 
+  const formattedAge = formatAgeFromBirth(animal.birthMonth, animal.birthYear)
+
   const infoItems: DetailItem[] = [
     animal.species === 'cat' && animal.fivStatus
       ? {
           key: 'fiv',
-          icon: <HeartPulse size={17} className="text-red-500" />,
+          icon: (
+            <HeartPulse
+              size={17}
+              className={
+                animal.fivStatus === 'positive' ? 'text-red-600' : 'text-red-500'
+              }
+            />
+          ),
           text: `FIV ${statusLabels[animal.fivStatus]}`,
+          highlighted: animal.fivStatus === 'positive',
         }
       : null,
     animal.species === 'cat' && animal.felvStatus
       ? {
           key: 'felv',
-          icon: <HeartPulse size={17} className="text-red-500" />,
+          icon: (
+            <HeartPulse
+              size={17}
+              className={
+                animal.felvStatus === 'positive' ? 'text-red-600' : 'text-red-500'
+              }
+            />
+          ),
           text: `FeLV ${statusLabels[animal.felvStatus]}`,
+          highlighted: animal.felvStatus === 'positive',
         }
       : null,
     animal.sex
@@ -241,11 +274,11 @@ export default async function AnimalPage({
           text: sexLabels[animal.sex],
         }
       : null,
-    formatAge(animal.ageValue, animal.ageUnit)
+    formattedAge
       ? {
           key: 'age',
-          icon: <Calendar size={17} className="text-green-700" />,
-          text: formatAge(animal.ageValue, animal.ageUnit)!,
+          icon: <CakeSlice size={17} className="text-green-700" />,
+          text: formattedAge,
         }
       : null,
     animal.species === 'dog' && animal.dogSize
@@ -405,18 +438,49 @@ export default async function AnimalPage({
         </Link>
 
         <div className="grid items-start gap-8 lg:grid-cols-[1.08fr_0.92fr]">
-          <div className="relative min-h-[520px] bg-gray-100">
-            {animal.image ? (
-              <Image
-                src={urlFor(animal.image).width(1400).height(1000).url()}
-                alt={animal.name}
-                fill
-                priority
-                className="object-cover"
-              />
-            ) : (
-              <div className="flex h-full items-center justify-center text-gray-400">
-                Nessuna immagine disponibile
+          <div>
+            <div className="relative min-h-[520px] bg-gray-100">
+              {animal.image ? (
+                <Image
+                  src={urlFor(animal.image).width(1400).height(1000).url()}
+                  alt={animal.name}
+                  fill
+                  priority
+                  className="object-cover"
+                />
+              ) : (
+                <div className="flex h-full items-center justify-center text-gray-400">
+                  Nessuna immagine disponibile
+                </div>
+              )}
+            </div>
+
+            {(animal.fivStatus === 'positive' || animal.felvStatus === 'positive') && (
+              <div className="mt-4">
+                <Link
+                  href="/consigli"
+                  className="group flex items-center justify-between gap-4 border border-[#E4B15A]/40 bg-[#FCFBF8] px-5 py-4 transition hover:bg-[#F3E6CC]"
+                >
+                  <div>
+                    <p className="text-sm font-semibold text-black">
+                      Vuoi saperne di più sulla{' '}
+                      {animal.fivStatus === 'positive' && animal.felvStatus === 'positive'
+                        ? 'FIV e FeLV'
+                        : animal.fivStatus === 'positive'
+                        ? 'FIV'
+                        : 'FeLV'}
+                      ?
+                    </p>
+
+                    <p className="mt-1 text-xs text-gray-600">
+                      Scopri cosa significa e come adottare con consapevolezza
+                    </p>
+                  </div>
+
+                  <span className="text-[#E4B15A] transition group-hover:translate-x-1">
+                    →
+                  </span>
+                </Link>
               </div>
             )}
           </div>
@@ -434,9 +498,19 @@ export default async function AnimalPage({
               <div className="flex flex-wrap items-center gap-y-2 text-[15px] text-gray-800">
                 {infoItems.map((item, index) => (
                   <div key={item.key} className="flex items-center">
-                    <div className="flex items-center gap-2">
+                    <div
+                      className={`flex items-center gap-2 ${
+                        item.highlighted
+                          ? 'rounded-full border border-red-200 bg-red-50 px-3 py-1'
+                          : ''
+                      }`}
+                    >
                       {item.icon}
-                      <span>{item.text}</span>
+                      <span
+                        className={item.highlighted ? 'font-semibold text-red-700' : ''}
+                      >
+                        {item.text}
+                      </span>
                     </div>
 
                     {index < infoItems.length - 1 && (
@@ -459,7 +533,7 @@ export default async function AnimalPage({
 
             <div className="mt-5 border-t border-gray-200 pt-5">
               {animal.description && (
-                <p className="text-[15px] leading-7 whitespace-pre-line text-gray-800">
+                <p className="whitespace-pre-line text-[15px] leading-7 text-gray-800">
                   {animal.description}
                 </p>
               )}

@@ -163,37 +163,25 @@ export default async function AttivitaPage() {
               <span className="text-white">Atti</span>
               <span className="text-[#E4B15A]">vità</span>
             </h1>
+
+            <div className="mt-8 max-w-3xl bg-white/10 px-5 py-4 backdrop-blur-sm">
+              <p className="text-sm leading-6 text-white md:text-[15px]">
+                L’associazione organizza mercatini solidali, raccolte fondi ed
+                eventi di sensibilizzazione per sostenere concretamente i nostri
+                animali e far conoscere il nostro lavoro.
+              </p>
+
+              <p className="mt-4 text-sm leading-6 text-white md:text-[15px]">
+                Promuoviamo anche passeggiate, visite veterinarie gratuite e
+                campagne di educazione rivolte alla comunità, con l’obiettivo di
+                diffondere maggiore consapevolezza sul benessere animale.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-14">
-        <div className="mb-14 max-w-4xl">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-[#E4B15A]">
-            Associazione Calico ODV
-          </p>
-
-          <h2 className="text-4xl font-black leading-none text-black md:text-5xl">
-            Cosa organizziamo
-          </h2>
-
-          <div className="mt-5 h-3 w-44 bg-[#E4B15A]" />
-
-          <div className="mt-8 space-y-4 text-sm leading-6 text-gray-700 md:text-[15px]">
-            <p>
-              L’associazione organizza mercatini solidali, raccolte fondi ed eventi
-              di sensibilizzazione per sostenere concretamente i nostri animali e
-              far conoscere il nostro lavoro.
-            </p>
-
-            <p>
-              Promuoviamo anche passeggiate, visite veterinarie gratuite e campagne
-              di educazione rivolte alla comunità, con l’obiettivo di diffondere
-              maggiore consapevolezza sul benessere animale.
-            </p>
-          </div>
-        </div>
-
         {futureEvents.length > 0 && (
           <section className="mb-16">
             <SectionTitle first="Eventi" second="futuri" />

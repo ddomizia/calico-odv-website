@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { FaWhatsapp, FaInstagram, FaFacebookF } from 'react-icons/fa'
+import { MdEmail } from 'react-icons/md'
 import { client } from '../../sanity/lib/client'
 import { availableCatsQuery } from '../../sanity/lib/queries'
 import { urlFor } from '../../sanity/lib/image'
@@ -12,8 +14,8 @@ type Animal = {
   }
   species?: 'cat' | 'dog'
   sex?: 'male' | 'female'
-  ageValue?: number
-  ageUnit?: 'months' | 'years'
+  birthMonth?: number
+  birthYear?: number
   image?: any
   fivStatus?: 'positive' | 'negative' | 'not_tested'
   felvStatus?: 'positive' | 'negative' | 'not_tested'
@@ -25,30 +27,48 @@ const sexLabels: Record<string, string> = {
   female: 'Femmina',
 }
 
-function formatAge(ageValue?: number, ageUnit?: 'months' | 'years') {
-  if (ageValue === undefined || ageValue === null) return 'Età n.d.'
+function getAgeParts(birthMonth?: number, birthYear?: number) {
+  if (!birthMonth || !birthYear) return null
 
-  if (ageUnit === 'months') {
-    return `${ageValue} ${ageValue === 1 ? 'mese' : 'mesi'}`
-  }
+  const now = new Date()
+  const currentMonth = now.getMonth() + 1
+  const currentYear = now.getFullYear()
 
-  return `${ageValue} ${ageValue === 1 ? 'anno' : 'anni'}`
+  const totalMonths = (currentYear - birthYear) * 12 + (currentMonth - birthMonth)
+
+  if (totalMonths < 0) return null
+
+  const years = Math.floor(totalMonths / 12)
+  const months = totalMonths % 12
+
+  return { years, months, totalMonths }
 }
 
-function getAgeInYears(ageValue?: number, ageUnit?: 'months' | 'years') {
-  if (ageValue === undefined || ageValue === null) return null
+function formatAge(birthMonth?: number, birthYear?: number) {
+  const age = getAgeParts(birthMonth, birthYear)
 
-  if (ageUnit === 'months') {
-    return ageValue / 12
+  if (!age) return 'Età n.d.'
+
+  const { years, months } = age
+
+  if (years === 0) {
+    return `${months} ${months === 1 ? 'mese' : 'mesi'}`
   }
 
-  return ageValue
+  if (months === 0) {
+    return `${years} ${years === 1 ? 'anno' : 'anni'}`
+  }
+
+  return `${years} ${years === 1 ? 'anno' : 'anni'} e ${months} ${months === 1 ? 'mese' : 'mesi'}`
 }
 
-function getAgeGroup(ageValue?: number, ageUnit?: 'months' | 'years') {
-  const ageInYears = getAgeInYears(ageValue, ageUnit)
+function getAgeGroup(birthMonth?: number, birthYear?: number) {
+  const age = getAgeParts(birthMonth, birthYear)
 
-  if (ageInYears === null) return 'adult'
+  if (!age) return 'adult'
+
+  const ageInYears = age.totalMonths / 12
+
   if (ageInYears <= 1) return 'kitten'
   if (ageInYears >= 10) return 'senior'
   return 'adult'
@@ -95,7 +115,7 @@ function CatCard({ animal }: { animal: Animal & { imageUrl?: string } }) {
         <p className="mb-4 text-sm leading-6 text-gray-700">
           {animal.sex ? sexLabels[animal.sex] : 'Sesso n.d.'}
           {' | '}
-          {formatAge(animal.ageValue, animal.ageUnit)}
+          {formatAge(animal.birthMonth, animal.birthYear)}
         </p>
 
         {animal.slug?.current && (
@@ -146,13 +166,13 @@ export default async function AdozioniPage() {
   }))
 
   const kittens = mappedAnimals.filter(
-    (animal) => getAgeGroup(animal.ageValue, animal.ageUnit) === 'kitten'
+    (animal) => getAgeGroup(animal.birthMonth, animal.birthYear) === 'kitten'
   )
   const adults = mappedAnimals.filter(
-    (animal) => getAgeGroup(animal.ageValue, animal.ageUnit) === 'adult'
+    (animal) => getAgeGroup(animal.birthMonth, animal.birthYear) === 'adult'
   )
   const seniors = mappedAnimals.filter(
-    (animal) => getAgeGroup(animal.ageValue, animal.ageUnit) === 'senior'
+    (animal) => getAgeGroup(animal.birthMonth, animal.birthYear) === 'senior'
   )
 
   return (
@@ -172,7 +192,7 @@ export default async function AdozioniPage() {
         </div>
       </section>
 
-      <div className="w-full mb-16">
+      <div className="mb-16 w-full">
         <div className="space-y-0">
           <div className="grid min-h-[340px] grid-cols-1 md:grid-cols-2">
             <div className="flex flex-col justify-center bg-white p-8 text-black md:p-12">
@@ -187,10 +207,50 @@ export default async function AdozioniPage() {
               </p>
 
               <p className="mt-3 max-w-xl text-sm leading-6 text-black/75">
-                In ogni scheda troverai il rimando alla pagina del gatto su
-                Empethy per procedere con la richiesta di adozione oppure per
-                chiederci ulteriori informazioni.
+                Per maggiori informazioni sulle adozioni puoi contattarci
+                direttamente: saremo felici di aiutarti e rispondere a qualsiasi
+                dubbio.
               </p>
+
+              <div className="mt-6 flex items-center gap-5">
+                <a
+                  href="https://wa.me/393393501334"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp"
+                  className="text-[#25D366] transition hover:opacity-80"
+                >
+                  <FaWhatsapp size={26} />
+                </a>
+
+                <a
+                  href="https://www.instagram.com/associazionecalico"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="text-[#E4405F] transition hover:opacity-80"
+                >
+                  <FaInstagram size={24} />
+                </a>
+
+                <a
+                  href="https://www.facebook.com/associazionecalico/?locale=it_IT"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="text-[#1877F2] transition hover:opacity-80"
+                >
+                  <FaFacebookF size={22} />
+                </a>
+
+                <a
+                  href="mailto:calicoassociazione@gmail.com"
+                  aria-label="Email"
+                  className="text-black transition hover:opacity-80"
+                >
+                  <MdEmail size={28} />
+                </a>
+              </div>
             </div>
 
             <div className="relative min-h-[260px]">
@@ -215,7 +275,7 @@ export default async function AdozioniPage() {
 
             <div className="flex flex-col justify-center bg-[#E4B15A] p-8 text-black md:p-12">
               <h2 className="text-3xl font-bold leading-tight md:text-4xl">
-                Le adozioni avvengono tramite Empethy
+                Le adozioni avvengono anche tramite Empethy
               </h2>
 
               <p className="mt-4 max-w-xl text-sm leading-6 text-black/85">
