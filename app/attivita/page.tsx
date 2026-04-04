@@ -34,11 +34,11 @@ function EventCard({
   isPast?: boolean
 }) {
   return (
-    <article className="overflow-hidden border border-gray-200 bg-white">
-      <div className="relative h-72 bg-[#F6F1E7]">
+    <article className="overflow-hidden border border-gray-200 bg-white transition hover:shadow-md">
+      <div className="relative h-64 bg-[#F6F1E7] sm:h-72">
         {isPast && (
           <div className="absolute left-3 top-3 z-10">
-            <span className="inline-flex items-center bg-[#C96B3C] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.12em] text-white shadow-md">
+            <span className="inline-flex items-center bg-[#C96B3C] px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.12em] text-white shadow-md">
               ✓ Evento concluso
             </span>
           </div>
@@ -52,33 +52,35 @@ function EventCard({
             className="object-contain"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-gray-400">
+          <div className="flex h-full items-center justify-center px-4 text-center text-gray-400">
             Nessuna locandina disponibile
           </div>
         )}
       </div>
 
-      <div className="p-5">
-        <h3 className="text-2xl font-bold text-black">{event.title}</h3>
+      <div className="p-4 sm:p-5">
+        <h3 className="text-xl font-bold leading-tight text-black sm:text-2xl">
+          {event.title}
+        </h3>
 
         <div className="mt-4 space-y-3 text-sm leading-6 text-gray-700">
           {event.date && (
             <div className="flex items-center gap-2">
-              <Calendar size={16} className="text-[#E4B15A]" />
+              <Calendar size={16} className="shrink-0 text-[#E4B15A]" />
               <span>{formatItalianDate(event.date)}</span>
             </div>
           )}
 
           {event.time && (
             <div className="flex items-center gap-2">
-              <Clock size={16} className="text-[#1F3B2D]" />
+              <Clock size={16} className="shrink-0 text-[#1F3B2D]" />
               <span>{event.time}</span>
             </div>
           )}
 
           {(event.location || event.street) && (
             <div className="flex items-start gap-2">
-              <MapPin size={16} className="mt-[2px] text-[#C96B3C]" />
+              <MapPin size={16} className="mt-[2px] shrink-0 text-[#C96B3C]" />
               <span>
                 {event.location}
                 {event.street ? `, ${event.street}` : ''}
@@ -87,8 +89,8 @@ function EventCard({
           )}
 
           {event.contacts && (
-            <div className="flex items-center gap-2">
-              <Info size={16} className="text-black" />
+            <div className="flex items-start gap-2">
+              <Info size={16} className="mt-[2px] shrink-0 text-black" />
               <span>{event.contacts}</span>
             </div>
           )}
@@ -106,8 +108,8 @@ function SectionTitle({
   second: string
 }) {
   return (
-    <div className="mb-7">
-      <h2 className="text-3xl font-black uppercase tracking-tight md:text-4xl">
+    <div className="mb-6 md:mb-7">
+      <h2 className="text-2xl font-black uppercase tracking-tight sm:text-3xl md:text-4xl">
         <span className="text-black">{first} </span>
         <span className="text-[#E4B15A]">{second}</span>
       </h2>
@@ -146,7 +148,7 @@ export default async function AttivitaPage() {
 
   return (
     <main className="min-h-screen bg-[#FCFBF8]">
-      <section className="relative min-h-[420px] overflow-hidden">
+      <section className="relative min-h-[380px] overflow-hidden sm:min-h-[420px] md:min-h-[460px]">
         <Image
           src="/home-hero.jpg"
           alt="Attività Associazione Calico ODV"
@@ -157,14 +159,14 @@ export default async function AttivitaPage() {
 
         <div className="absolute inset-0 bg-black/50" />
 
-        <div className="relative z-10 mx-auto flex min-h-[420px] max-w-7xl items-center px-6 py-16">
+        <div className="relative z-10 mx-auto flex min-h-[380px] max-w-7xl items-center px-6 py-14 sm:min-h-[420px] md:min-h-[460px] md:py-16">
           <div className="max-w-4xl">
-            <h1 className="text-5xl font-black uppercase leading-none tracking-tight md:text-7xl">
+            <h1 className="text-4xl font-black uppercase leading-none tracking-tight sm:text-5xl md:text-7xl">
               <span className="text-white">Atti</span>
               <span className="text-[#E4B15A]">vità</span>
             </h1>
 
-            <div className="mt-8 max-w-3xl bg-white/10 px-5 py-4 backdrop-blur-sm">
+            <div className="mt-6 max-w-3xl bg-white/10 px-4 py-4 backdrop-blur-sm sm:mt-8 sm:px-5">
               <p className="text-sm leading-6 text-white md:text-[15px]">
                 L’associazione organizza mercatini solidali, raccolte fondi ed
                 eventi di sensibilizzazione per sostenere concretamente i nostri
@@ -181,12 +183,12 @@ export default async function AttivitaPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-14">
+      <section className="mx-auto max-w-7xl px-6 py-10 md:py-14">
         {futureEvents.length > 0 && (
-          <section className="mb-16">
+          <section className="mb-12 md:mb-16">
             <SectionTitle first="Eventi" second="futuri" />
 
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {futureEvents.map((event) => (
                 <EventCard key={event._id} event={event} />
               ))}
@@ -198,7 +200,7 @@ export default async function AttivitaPage() {
           <section>
             <SectionTitle first="Eventi" second="passati" />
 
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {pastEvents.map((event) => (
                 <EventCard key={event._id} event={event} isPast />
               ))}
@@ -207,7 +209,7 @@ export default async function AttivitaPage() {
         )}
 
         {futureEvents.length === 0 && pastEvents.length === 0 && (
-          <div className="border border-gray-200 bg-white p-8">
+          <div className="border border-gray-200 bg-white p-6 md:p-8">
             <p className="text-sm leading-6 text-gray-700">
               Non ci sono ancora eventi pubblicati.
             </p>

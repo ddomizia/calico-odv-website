@@ -1,95 +1,82 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { Mail, Phone } from 'lucide-react'
 import { FaInstagram, FaFacebookF } from 'react-icons/fa'
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1F3B2D] text-white">
-      <div className="mx-auto max-w-7xl px-6 py-12">
-        
-        {/* GRID */}
-        <div className="grid gap-10 md:grid-cols-3 items-start">
-          
-          {/* LOGO GRANDE */}
-          <div className="flex justify-start md:justify-center">
-            <Image
-              src="/logo-calico.png"
-              alt="Associazione Calico ODV"
-              width={220}
-              height={220}
-              className="object-contain"
-            />
-          </div>
-
+    <footer className="bg-[#E4B15A] text-black">
+      <div className="mx-auto max-w-7xl px-6 py-8 md:py-10">
+        <div className="grid gap-8 md:grid-cols-2 md:gap-10 items-start">
           {/* LINK UTILI */}
-          <div>
-            <h4 className="text-sm font-bold uppercase tracking-wide text-[#E4B15A]">
+          <div className="text-center md:text-left">
+            <h4 className="text-xs font-bold uppercase tracking-wide text-black/70">
               Link utili
             </h4>
 
-            <ul className="mt-4 space-y-2 text-sm">
-              <li><Link href="/" className="hover:text-[#E4B15A]">Home</Link></li>
-              <li><Link href="/adozioni" className="hover:text-[#E4B15A]">Adozioni gatti</Link></li>
-              <li><Link href="/cani" className="hover:text-[#E4B15A]">Adozioni cani</Link></li>
-              <li><Link href="/adottati" className="hover:text-[#E4B15A]">Adottati</Link></li>
-              <li><Link href="/consigli" className="hover:text-[#E4B15A]">Consigli</Link></li>
-              <li><Link href="/sostienici" className="hover:text-[#E4B15A]">Sostienici</Link></li>
-              <li><Link href="/privacy-policy" className="hover:text-[#E4B15A]">Privacy Policy</Link></li>
-              <li><Link href="/cookie-policy" className="hover:text-[#E4B15A]">Cookie Policy</Link></li>
+            <ul className="mt-4 flex flex-col gap-2 text-sm md:flex-row md:flex-wrap md:gap-x-6 md:gap-y-2">
+              <li>
+                <Link href="/privacy-policy" className="transition hover:opacity-70">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/cookie-policy" className="transition hover:opacity-70">
+                  Cookie Policy
+                </Link>
+              </li>
             </ul>
           </div>
 
           {/* CONTATTI */}
-          <div>
-            <h4 className="text-sm font-bold uppercase tracking-wide text-[#E4B15A]">
+          <div className="text-center md:text-right">
+            <h4 className="text-xs font-bold uppercase tracking-wide text-black/70">
               Contatti
             </h4>
 
-            <div className="mt-4 space-y-3 text-sm text-white/80">
-              
+            <div className="mt-4 space-y-3 text-sm text-black/80">
               <a
                 href="mailto:calicoassociazione@gmail.com"
-                className="flex items-center gap-2 hover:text-[#E4B15A]"
+                className="flex items-center justify-center gap-2 transition hover:opacity-70 md:justify-end"
               >
                 <Mail size={16} />
-                calicoassociazione@gmail.com
+                <span className="break-all">calicoassociazione@gmail.com</span>
               </a>
 
               <a
                 href="tel:+393393501334"
-                className="flex items-center gap-2 hover:text-[#E4B15A]"
+                className="flex items-center justify-center gap-2 transition hover:opacity-70 md:justify-end"
               >
                 <Phone size={16} />
                 +39 339 350 1334
               </a>
 
-              <a
-                href="https://www.instagram.com/associazionecalico"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 hover:text-[#E4B15A]"
-              >
-                <FaInstagram size={16} />
-                @associazionecalico
-              </a>
+              <div className="flex items-center justify-center gap-4 pt-1 md:justify-end">
+                <a
+                  href="https://www.instagram.com/associazionecalico"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="transition hover:opacity-70"
+                >
+                  <FaInstagram size={18} />
+                </a>
 
-              <a
-                href="https://www.facebook.com/associazionecalico/?locale=it_IT"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 hover:text-[#E4B15A]"
-              >
-                <FaFacebookF size={14} />
-                Associazione Calico ODV
-              </a>
+                <a
+                  href="https://www.facebook.com/associazionecalico/?locale=it_IT"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="transition hover:opacity-70"
+                >
+                  <FaFacebookF size={16} />
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* LINEA FINALE */}
-        <div className="mt-10 border-t border-white/10 pt-6 text-center text-xs text-white/60">
-          © {new Date().getFullYear()} Associazione Calico ODV — Tutti i diritti riservati
+        <div className="mt-6 border-t border-black/10 pt-4 text-center text-xs text-black/60">
+          © {new Date().getFullYear()} Associazione Calico ODV
         </div>
       </div>
     </footer>

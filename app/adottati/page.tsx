@@ -86,8 +86,8 @@ function AdoptedCard({ animal }: { animal: Animal & { imageUrl?: string } }) {
     animal.specialConditions.length > 0
 
   return (
-    <article className="overflow-hidden border border-gray-200 bg-white">
-      <div className="relative h-56 bg-[#F6F1E7]">
+    <article className="overflow-hidden border border-gray-200 bg-white transition hover:shadow-md">
+      <div className="relative h-52 bg-[#F6F1E7] sm:h-56">
         {animal.imageUrl ? (
           <Image
             src={animal.imageUrl}
@@ -103,39 +103,41 @@ function AdoptedCard({ animal }: { animal: Animal & { imageUrl?: string } }) {
 
         <div className="absolute left-3 top-3">
           <span
-            className={`inline-flex px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] ${speciesBadgeClass}`}
+            className={`inline-flex px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] sm:text-[11px] ${speciesBadgeClass}`}
           >
             {speciesLabel}
           </span>
         </div>
 
         <div className="absolute right-3 top-3">
-          <span className="inline-flex bg-white/95 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-black">
+          <span className="inline-flex bg-white/95 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-black sm:text-[11px]">
             Adottato
           </span>
         </div>
       </div>
 
       <div className="p-4">
-        <div className="mb-2 flex flex-wrap items-center gap-2">
-          <h3 className="text-xl font-bold text-black">{animal.name}</h3>
+        <h3 className="text-lg font-bold text-black sm:text-xl">{animal.name}</h3>
 
-          {hasPositiveViralStatus && viralBadgeLabel && (
-            <span className="inline-flex items-center gap-1 rounded-full border border-red-200 bg-red-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-red-700">
-              <HeartPulse size={12} />
-              {viralBadgeLabel}
-            </span>
-          )}
+        {(hasPositiveViralStatus || hasSpecialNeeds) && (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {hasPositiveViralStatus && viralBadgeLabel && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-red-200 bg-red-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-red-700 sm:text-[11px]">
+                <HeartPulse size={12} />
+                {viralBadgeLabel}
+              </span>
+            )}
 
-          {hasSpecialNeeds && (
-            <span className="inline-flex items-center gap-1 rounded-full border border-[#E4B15A]/50 bg-[#FDF6E8] px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-[#C96B3C]">
-              <HeartPulse size={12} />
-              Adozione del cuore
-            </span>
-          )}
-        </div>
+            {hasSpecialNeeds && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-[#E4B15A]/50 bg-[#FDF6E8] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#C96B3C] sm:text-[11px]">
+                <HeartPulse size={12} />
+                Adozione del cuore
+              </span>
+            )}
+          </div>
+        )}
 
-        <p className="text-sm leading-6 text-gray-700">
+        <p className="mt-3 text-sm leading-6 text-gray-700">
           {animal.sex ? sexLabels[animal.sex] : 'Sesso n.d.'}
           {' | '}
           {formatAgeFromBirth(animal.birthMonth, animal.birthYear)}
@@ -157,7 +159,7 @@ export default async function AdottatiPage() {
 
   return (
     <main className="min-h-screen bg-[#FCFBF8]">
-      <section className="relative min-h-[420px] overflow-hidden">
+      <section className="relative min-h-[360px] overflow-hidden sm:min-h-[400px] md:min-h-[420px]">
         <Image
           src="/home-hero.jpg"
           alt="Animali adottati"
@@ -168,9 +170,9 @@ export default async function AdottatiPage() {
 
         <div className="absolute inset-0 bg-black/50" />
 
-        <div className="relative z-10 mx-auto flex min-h-[420px] max-w-7xl items-center px-6 py-16">
+        <div className="relative z-10 mx-auto flex min-h-[360px] max-w-7xl items-center px-6 py-14 sm:min-h-[400px] md:min-h-[420px] md:py-16">
           <div className="max-w-4xl">
-            <h1 className="text-5xl font-black uppercase leading-none tracking-tight md:text-7xl">
+            <h1 className="text-4xl font-black uppercase leading-none tracking-tight sm:text-5xl md:text-7xl">
               <span className="text-white">Ado</span>
               <span className="text-[#E4B15A]">ttati</span>
             </h1>
@@ -178,19 +180,19 @@ export default async function AdottatiPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-14">
-        <div className="mb-12 max-w-4xl">
+      <section className="mx-auto max-w-7xl px-6 py-10 md:py-14">
+        <div className="mb-10 max-w-4xl md:mb-12">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-[#E4B15A]">
             Associazione Calico ODV
           </p>
 
-          <h2 className="text-4xl font-black leading-none text-black md:text-5xl">
+          <h2 className="text-3xl font-black leading-none text-black sm:text-4xl md:text-5xl">
             Chi ha trovato una nuova casa
           </h2>
 
-          <div className="mt-5 h-3 w-44 bg-[#E4B15A]" />
+          <div className="mt-4 h-2 w-28 bg-[#E4B15A] md:mt-5 md:h-3 md:w-44" />
 
-          <p className="mt-6 max-w-3xl text-sm leading-6 text-gray-700 md:text-[15px]">
+          <p className="mt-5 max-w-3xl text-sm leading-6 text-gray-700 md:mt-6 md:text-[15px]">
             Qui trovi gli animali che hanno già trovato una famiglia. Ogni adozione
             per noi è una gioia enorme e racconta il senso del lavoro che facciamo
             ogni giorno.
@@ -198,13 +200,13 @@ export default async function AdottatiPage() {
         </div>
 
         {mappedAnimals.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {mappedAnimals.map((animal) => (
               <AdoptedCard key={animal._id} animal={animal} />
             ))}
           </div>
         ) : (
-          <div className="border border-gray-200 bg-white p-8">
+          <div className="border border-gray-200 bg-white p-6 md:p-8">
             <p className="text-sm leading-6 text-gray-700">
               Al momento non ci sono ancora animali segnati come adottati.
             </p>

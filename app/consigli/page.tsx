@@ -45,24 +45,24 @@ function TopicCard({
   return (
     <button
       onClick={onClick}
-      className="group flex h-full flex-col justify-between border border-black/10 bg-white p-6 text-left transition duration-200 hover:-translate-y-1 hover:shadow-xl"
+      className="group flex h-full flex-col justify-between border border-black/10 bg-white p-5 text-left transition duration-200 hover:-translate-y-1 hover:shadow-xl sm:p-6"
     >
       <div>
         <div
-          className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full"
+          className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full sm:mb-5 sm:h-12 sm:w-12"
           style={{ backgroundColor: accent }}
         >
-          <Icon size={22} className="text-black" />
+          <Icon size={20} className="text-black sm:size-[22px]" />
         </div>
 
-        <h3 className="text-2xl font-black uppercase leading-tight text-black">
+        <h3 className="text-xl font-black uppercase leading-tight text-black sm:text-2xl">
           {title}
         </h3>
 
         <p className="mt-3 text-sm leading-6 text-gray-700">{subtitle}</p>
       </div>
 
-      <span className="mt-8 inline-flex text-sm font-bold uppercase tracking-wide text-[#1F3B2D]">
+      <span className="mt-6 inline-flex text-sm font-bold uppercase tracking-wide text-[#1F3B2D] sm:mt-8">
         Apri la scheda
       </span>
     </button>
@@ -81,23 +81,23 @@ function EmptyTopicCard({
   accent: string
 }) {
   return (
-    <div className="flex h-full flex-col justify-between border border-dashed border-black/15 bg-white/70 p-6 text-left">
+    <div className="flex h-full flex-col justify-between border border-dashed border-black/15 bg-white/70 p-5 text-left sm:p-6">
       <div>
         <div
-          className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full"
+          className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full sm:mb-5 sm:h-12 sm:w-12"
           style={{ backgroundColor: accent }}
         >
-          <Icon size={22} className="text-black" />
+          <Icon size={20} className="text-black sm:size-[22px]" />
         </div>
 
-        <h3 className="text-2xl font-black uppercase leading-tight text-black">
+        <h3 className="text-xl font-black uppercase leading-tight text-black sm:text-2xl">
           {title}
         </h3>
 
         <p className="mt-3 text-sm leading-6 text-gray-700">{subtitle}</p>
       </div>
 
-      <span className="mt-8 inline-flex text-sm font-bold uppercase tracking-wide text-black/40">
+      <span className="mt-6 inline-flex text-sm font-bold uppercase tracking-wide text-black/40 sm:mt-8">
         Schede in arrivo
       </span>
     </div>
@@ -177,10 +177,10 @@ function Modal({
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-6">
-      <div className="relative max-h-[90vh] w-full max-w-5xl overflow-hidden border border-black/10 bg-white shadow-2xl">
-        <div className="flex items-center justify-between border-b border-black/10 bg-[#FCFBF8] px-5 py-4 md:px-6">
-          <h3 className="pr-4 text-xl font-black uppercase leading-tight text-black md:text-2xl">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 px-3 py-3 sm:items-center sm:px-4 sm:py-6">
+      <div className="relative max-h-[92vh] w-full max-w-5xl overflow-hidden border border-black/10 bg-white shadow-2xl">
+        <div className="flex items-center justify-between border-b border-black/10 bg-[#FCFBF8] px-4 py-4 sm:px-5 md:px-6">
+          <h3 className="pr-4 text-lg font-black uppercase leading-tight text-black sm:text-xl md:text-2xl">
             {title}
           </h3>
 
@@ -193,7 +193,7 @@ function Modal({
           </button>
         </div>
 
-        <div className="max-h-[calc(90vh-72px)] overflow-y-auto px-5 py-5 md:px-6 md:py-6">
+        <div className="max-h-[calc(92vh-72px)] overflow-y-auto px-4 py-5 sm:px-5 md:px-6 md:py-6">
           {children}
         </div>
       </div>
@@ -359,7 +359,7 @@ export default function ConsigliPage() {
 
   return (
     <main className="min-h-screen bg-[#FCFBF8]">
-      <section className="relative min-h-[560px] overflow-hidden">
+      <section className="relative min-h-[460px] overflow-hidden sm:min-h-[520px] md:min-h-[560px]">
         <Image
           src="/gatto-6.jpg"
           alt="I nostri consigli"
@@ -370,14 +370,14 @@ export default function ConsigliPage() {
 
         <div className="absolute inset-0 bg-black/50" />
 
-        <div className="relative z-10 mx-auto flex min-h-[560px] max-w-7xl items-center px-6 py-16">
+        <div className="relative z-10 mx-auto flex min-h-[460px] max-w-7xl items-center px-6 py-14 sm:min-h-[520px] md:min-h-[560px] md:py-16">
           <div className="max-w-5xl">
-            <h1 className="text-5xl font-black uppercase leading-none tracking-tight md:text-7xl">
+            <h1 className="text-4xl font-black uppercase leading-none tracking-tight sm:text-5xl md:text-7xl">
               <span className="text-white">I nostri </span>
               <span className="text-[#E4B15A]">consigli</span>
             </h1>
 
-            <div className="mt-8 max-w-3xl bg-white/10 px-5 py-4 backdrop-blur-sm">
+            <div className="mt-6 max-w-3xl bg-white/10 px-4 py-4 backdrop-blur-sm sm:mt-8 sm:px-5">
               <p className="text-sm leading-6 text-white md:text-[15px]">
                 In questa pagina trovi schede tematiche pensate per raccogliere i
                 consigli più utili in modo chiaro e consultabile. L’idea è quella
@@ -390,15 +390,15 @@ export default function ConsigliPage() {
         </div>
       </section>
 
-      <section className="w-full bg-[#F3E6CC] py-14">
+      <section className="w-full bg-[#F3E6CC] py-10 md:py-14">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="grid gap-10 lg:grid-cols-2">
-            <div className="border border-black/10 bg-[#FCFBF8] p-6 md:p-8">
-              <div className="mb-8 max-w-2xl">
+          <div className="grid gap-6 lg:grid-cols-2 lg:gap-10">
+            <div className="border border-black/10 bg-[#FCFBF8] p-5 sm:p-6 md:p-8">
+              <div className="mb-6 max-w-2xl sm:mb-8">
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#C96B3C]">
                   I nostri consigli
                 </p>
-                <h2 className="mt-3 text-3xl font-black uppercase leading-none text-black md:text-4xl">
+                <h2 className="mt-3 text-2xl font-black uppercase leading-none text-black sm:text-3xl md:text-4xl">
                   Schede pratiche per l’adozione
                 </h2>
                 <p className="mt-4 text-sm leading-6 text-black/75 md:text-[15px]">
@@ -407,7 +407,7 @@ export default function ConsigliPage() {
                 </p>
               </div>
 
-              <div className="grid gap-6 md:grid-cols-1 xl:grid-cols-2">
+              <div className="grid gap-5 xl:grid-cols-2">
                 {adviceCards.map((card) => (
                   <TopicCard
                     key={card.id}
@@ -421,12 +421,12 @@ export default function ConsigliPage() {
               </div>
             </div>
 
-            <div className="border border-black/10 bg-white p-6 md:p-8">
-              <div className="mb-8 max-w-2xl">
+            <div className="border border-black/10 bg-white p-5 sm:p-6 md:p-8">
+              <div className="mb-6 max-w-2xl sm:mb-8">
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#1F3B2D]">
                   Salute e approfondimenti
                 </p>
-                <h2 className="mt-3 text-3xl font-black uppercase leading-none text-black md:text-4xl">
+                <h2 className="mt-3 text-2xl font-black uppercase leading-none text-black sm:text-3xl md:text-4xl">
                   Scopri di più sulle principali malattie dei gatti
                 </h2>
                 <p className="mt-4 text-sm leading-6 text-gray-700 md:text-[15px]">
@@ -436,7 +436,7 @@ export default function ConsigliPage() {
                 </p>
               </div>
 
-              <div className="grid gap-6 md:grid-cols-1 xl:grid-cols-2">
+              <div className="grid gap-5 xl:grid-cols-2">
                 <EmptyTopicCard
                   title="Schede in arrivo"
                   subtitle="Presto troverai qui approfondimenti chiari e accessibili su FIV, FeLV e altre condizioni importanti da conoscere."
@@ -456,14 +456,14 @@ export default function ConsigliPage() {
         </div>
       </section>
 
-      <section className="w-full bg-[#1F3B2D] py-14 text-white">
+      <section className="w-full bg-[#1F3B2D] py-10 text-white md:py-14">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
+          <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center md:gap-8">
             <div>
-              <h2 className="text-3xl font-black uppercase tracking-tight md:text-4xl">
+              <h2 className="text-2xl font-black uppercase tracking-tight sm:text-3xl md:text-4xl">
                 Se hai qualsiasi dubbio, contattaci
               </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-6 text-white/90">
+              <p className="mt-4 max-w-2xl text-sm leading-6 text-white/90 md:text-[15px]">
                 In caso di dubbi o difficoltà, il consiglio migliore resta sempre
                 quello di sentire il referente volontario che ha seguito
                 l’adozione.
