@@ -17,6 +17,7 @@ import {
   BadgeCheck,
   Scale,
   Dog,
+  Stethoscope,
 } from 'lucide-react'
 import { FaWhatsapp, FaInstagram, FaFacebookF } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
@@ -190,7 +191,7 @@ function formatAgeFromBirth(birthMonth?: number, birthYear?: number) {
   const currentMonth = now.getMonth() + 1
   const currentYear = now.getFullYear()
 
-  let totalMonths =
+  const totalMonths =
     (currentYear - birthYear) * 12 + (currentMonth - birthMonth)
 
   if (totalMonths < 0) return null
@@ -230,6 +231,12 @@ export default async function AnimalPage({
   }
 
   const formattedAge = formatAgeFromBirth(animal.birthMonth, animal.birthYear)
+  const hasViralInfo =
+    animal.fivStatus === 'positive' || animal.felvStatus === 'positive'
+  const hasHealthNotes =
+    animal.species === 'cat' &&
+    animal.healthNotes &&
+    animal.healthNotes.trim().length > 0
 
   const infoItems: DetailItem[] = [
     animal.species === 'cat' && animal.fivStatus
@@ -421,7 +428,6 @@ export default async function AnimalPage({
   const hasCatExtraContent =
     animal.species === 'cat' &&
     (extraInfoItems.length > 0 ||
-      animal.healthNotes ||
       (animal.specialConditions && animal.specialConditions.length > 0))
 
   const hasDogExtraContent =
@@ -439,14 +445,14 @@ export default async function AnimalPage({
 
         <div className="grid items-start gap-8 lg:grid-cols-[1.08fr_0.92fr]">
           <div>
-            <div className="relative min-h-[520px] bg-gray-100">
+            <div className="relative min-h-[420px] bg-gray-100 sm:min-h-[500px] lg:min-h-[520px]">
               {animal.image ? (
                 <Image
-                  src={urlFor(animal.image).width(1400).height(1000).url()}
+                  src={urlFor(animal.image).width(1400).height(1200).url()}
                   alt={animal.name}
                   fill
                   priority
-                  className="object-cover"
+                  className="object-cover object-[center_20%]"
                 />
               ) : (
                 <div className="flex h-full items-center justify-center text-gray-400">
@@ -455,7 +461,7 @@ export default async function AnimalPage({
               )}
             </div>
 
-            {(animal.fivStatus === 'positive' || animal.felvStatus === 'positive') && (
+            {hasViralInfo && (
               <div className="mt-4">
                 <Link
                   href="/consigli"
@@ -481,6 +487,25 @@ export default async function AnimalPage({
                     →
                   </span>
                 </Link>
+              </div>
+            )}
+
+            {hasHealthNotes && (
+              <div className="mt-4 border border-[#C96B3C]/20 bg-[#FCFBF8] px-5 py-4">
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5 shrink-0 text-[#C96B3C]">
+                    <Stethoscope size={18} />
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-semibold text-black">
+                      Note sanitarie aggiuntive
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-gray-700">
+                      {animal.healthNotes}
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -569,12 +594,6 @@ export default async function AnimalPage({
                       ))}
                     </div>
                   )}
-
-                {animal.species === 'cat' && animal.healthNotes && (
-                  <p className="mt-5 text-[15px] leading-7 text-gray-700">
-                    {animal.healthNotes}
-                  </p>
-                )}
               </div>
             )}
 

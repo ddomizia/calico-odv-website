@@ -7,6 +7,7 @@ import {
   Dog,
   HeartHandshake,
   BookOpen,
+  ChevronDown,
 } from 'lucide-react'
 import StatsStrip from '@/components/home/StatsStrip'
 
@@ -114,10 +115,35 @@ function HomeFeatureSection({
   )
 }
 
+function ScrollDownButton() {
+  return (
+    <a
+      href="#home-content-start"
+      aria-label="Vai alla sezione successiva"
+      className="group inline-flex flex-col items-center"
+    >
+      <span className="mb-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#E4B15A]/90 transition group-hover:text-white">
+        Scopri
+      </span>
+
+      <span className="relative inline-flex h-14 w-14 items-center justify-center rounded-full border border-[#E4B15A]/70 bg-[#1F3B2D]/45 shadow-[0_8px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm transition duration-300 group-hover:scale-105 group-hover:bg-[#E4B15A] group-hover:text-black">
+        <span className="absolute inset-0 rounded-full border border-white/10" />
+        <ChevronDown
+          size={24}
+          className="animate-bounce text-[#E4B15A] transition group-hover:text-black"
+        />
+      </span>
+    </a>
+  )
+}
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#FCFBF8]">
-      <section className="relative min-h-[460px] overflow-hidden sm:min-h-[520px] md:min-h-[560px]">
+      <section
+        className="relative overflow-hidden"
+        style={{ minHeight: 'calc(100vh - 73px)' }}
+      >
         <Image
           src="/home-hero.jpg"
           alt="Associazione Calico ODV"
@@ -128,18 +154,28 @@ export default function Home() {
 
         <div className="absolute inset-0 bg-black/50" />
 
-        <div className="relative z-10 mx-auto flex min-h-[460px] max-w-7xl items-center px-6 py-16 sm:min-h-[520px] md:min-h-[560px]">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl font-black uppercase leading-none tracking-tight sm:text-5xl md:text-7xl">
+        <div
+          className="relative z-10 mx-auto flex max-w-7xl items-center px-6 py-16"
+          style={{ minHeight: 'calc(100vh - 73px)' }}
+        >
+          <div className="max-w-4xl">
+            <h1 className="text-left text-4xl font-black uppercase leading-none tracking-tight sm:text-5xl md:text-7xl lg:text-8xl">
               <span className="text-white">Associazione </span>
               <span className="text-[#E4B15A]">Calico</span>{' '}
               <span className="text-white">ODV</span>
             </h1>
           </div>
         </div>
+
+        <div className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2">
+          <ScrollDownButton />
+        </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-8 px-6 py-12 md:gap-10 md:py-16 lg:grid-cols-[1fr_0.95fr] lg:items-center">
+      <section
+        id="home-content-start"
+        className="mx-auto grid max-w-7xl gap-8 px-6 py-12 scroll-mt-24 md:gap-10 md:py-16 lg:grid-cols-[1fr_0.95fr] lg:items-center"
+      >
         <div className="order-2 lg:order-1">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-[#E4B15A]">
             Associazione Calico ODV

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { ChevronDown, PawPrint, X } from 'lucide-react'
 
 const navItems = [
+  { label: 'Home', href: '/', bg: 'bg-[#1F3B2D]', text: 'text-white' },
   { label: 'Gatti', href: '/adozioni', bg: 'bg-[#E4B15A]', text: 'text-black' },
   { label: 'Cani', href: '/cani', bg: 'bg-[#F3E6CC]', text: 'text-black' },
   { label: 'Conigli', href: '/conigli', bg: 'bg-[#D8C3A5]', text: 'text-black' },
@@ -98,7 +99,9 @@ export default function Navbar() {
               Trasparenza
               <ChevronDown
                 size={14}
-                className={`transition-transform duration-300 ${isTransparencyOpen ? 'rotate-180' : ''}`}
+                className={`transition-transform duration-300 ${
+                  isTransparencyOpen ? 'rotate-180' : ''
+                }`}
               />
             </button>
 

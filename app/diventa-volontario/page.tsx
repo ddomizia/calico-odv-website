@@ -148,7 +148,7 @@ export default function DiventaVolontarioPage() {
           <VolunteerBlock
             title="Eventi e raccolte fondi"
             text="Aiutaci a organizzare mercatini, eventi e iniziative per sostenere concretamente l’associazione."
-            image="/chi-siamo.jpg"
+            image="/calico-volontari-1.jpg"
             bgClass="bg-[#E4B15A]"
             textClass="text-black"
             imageFirstMobile={true}
