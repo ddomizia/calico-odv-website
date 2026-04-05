@@ -195,3 +195,12 @@ export const availableCatsQuery = `
     healthNotes
   }
 `
+export const testimonialsQuery = `
+  *[_type == "testimonial" && isPublished == true] | order(orderRank asc, _createdAt desc) {
+    _id,
+    name,
+    role,
+    quote,
+    relatedAnimalName
+  }
+`
