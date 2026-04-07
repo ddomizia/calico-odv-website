@@ -3,55 +3,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { Cookie, ShieldCheck, PlayCircle } from 'lucide-react'
-
-const THIRD_PARTY_KEY = 'calico_third_party_content_consent'
-
-function emitConsentChange(value: 'accepted' | 'rejected') {
-  window.dispatchEvent(
-    new CustomEvent('calico-third-party-consent-changed', {
-      detail: value,
-    })
-  )
-}
-
-function saveConsent(value: 'accepted' | 'rejected') {
-  try {
-    localStorage.setItem(THIRD_PARTY_KEY, value)
-    emitConsentChange(value)
-  } catch {
-    // ignore
-  }
-}
-
-function readConsent(): 'accepted' | 'rejected' | null {
-  try {
-    const saved = localStorage.getItem(THIRD_PARTY_KEY)
-    return saved === 'accepted' || saved === 'rejected' ? saved : null
-  } catch {
-    return null
-  }
-}
-
-function tryOpenCookiePreferences() {
-  const selectors = [
-    '#silktide-cookie-icon',
-    '.silktide-cookie-icon',
-    '[data-silktide-cookie-banner-show-preferences]',
-    '[aria-label*="cookie" i]',
-    '[aria-label*="preferenze" i]',
-    '[aria-label*="preferences" i]',
-  ]
-
-  for (const selector of selectors) {
-    const element = document.querySelector(selector) as HTMLElement | null
-    if (element) {
-      element.click()
-      return true
-    }
-  }
-
-  return false
-}
+import {
+  getCookieConsent,
+  savePreferences,
+  type CookieConsent,
+} from '@/lib/cookie-consent'
 
 export default function ThirdPartyEmbedGate({
   children,
@@ -60,54 +16,32 @@ export default function ThirdPartyEmbedGate({
   children: React.ReactNode
   title?: string
 }) {
-  const [consent, setConsent] = useState<'accepted' | 'rejected' | null>(null)
-  const [triedAutoOpen, setTriedAutoOpen] = useState(false)
+  const [consent, setConsent] = useState<CookieConsent | null>(null)
 
   useEffect(() => {
-    setConsent(readConsent())
+    setConsent(getCookieConsent())
 
     const handleConsentChange = (event: Event) => {
-      const customEvent = event as CustomEvent<'accepted' | 'rejected'>
+      const customEvent = event as CustomEvent<CookieConsent>
       setConsent(customEvent.detail)
     }
 
-    const handleStorage = () => {
-      setConsent(readConsent())
-    }
-
     window.addEventListener(
-      'calico-third-party-consent-changed',
+      'calico-cookie-consent-changed',
       handleConsentChange as EventListener
     )
-    window.addEventListener('storage', handleStorage)
 
     return () => {
       window.removeEventListener(
-        'calico-third-party-consent-changed',
+        'calico-cookie-consent-changed',
         handleConsentChange as EventListener
       )
-      window.removeEventListener('storage', handleStorage)
     }
   }, [])
 
-  useEffect(() => {
-    if (consent !== null || triedAutoOpen) return
-
-    let attempts = 0
-    const interval = window.setInterval(() => {
-      attempts += 1
-      const opened = tryOpenCookiePreferences()
-
-      if (opened || attempts >= 8) {
-        window.clearInterval(interval)
-        setTriedAutoOpen(true)
-      }
-    }, 500)
-
-    return () => window.clearInterval(interval)
-  }, [consent, triedAutoOpen])
-
-  const canShowEmbed = useMemo(() => consent === 'accepted', [consent])
+  const canShowEmbed = useMemo(() => {
+    return !!consent?.isSet && !!consent?.thirdParty
+  }, [consent])
 
   if (canShowEmbed) {
     return <>{children}</>
@@ -141,12 +75,12 @@ export default function ThirdPartyEmbedGate({
           </div>
 
           <p className="text-sm leading-6 text-gray-700">
-            Se il pannello non si è aperto automaticamente, puoi aprirlo tu dal
-            pulsante con il{' '}
+            Puoi accettare i contenuti di terze parti direttamente qui oppure
+            aprire in qualsiasi momento le preferenze dal pulsante con il{' '}
             <span className="inline-flex translate-y-[2px] text-[#C96B3C]">
               <Cookie size={15} />
             </span>{' '}
-            biscotto in basso a sinistra oppure con il pulsante qui sotto.
+            biscotto in basso a sinistra.
           </p>
         </div>
 
@@ -154,23 +88,12 @@ export default function ThirdPartyEmbedGate({
           <button
             type="button"
             onClick={() => {
-              saveConsent('accepted')
+              savePreferences(true)
             }}
             className="inline-flex items-center gap-2 bg-[#1F3B2D] px-5 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:opacity-90"
           >
             <PlayCircle size={16} className="text-[#E4B15A]" />
             Accetta e visualizza la diretta
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              tryOpenCookiePreferences()
-            }}
-            className="inline-flex items-center gap-2 border border-black/10 bg-white px-5 py-3 text-sm font-bold uppercase tracking-wide text-black transition hover:bg-[#F3E6CC]"
-          >
-            <Cookie size={16} className="text-[#C96B3C]" />
-            Apri preferenze cookie
           </button>
 
           <Link
