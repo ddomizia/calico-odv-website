@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   description:
     'Associazione Calico ODV si occupa di recupero, cura e adozione consapevole di animali in difficoltà tra Roma e Nepi. Scopri i nostri gatti, cani, progetti e attività.',
 
+  applicationName: 'Associazione Calico ODV',
+  category: 'animal rescue',
+
   keywords: [
     'Associazione Calico ODV',
     'adozione gatti Roma',
@@ -35,12 +38,16 @@ export const metadata: Metadata = {
   publisher: 'Associazione Calico ODV',
 
   alternates: {
-    canonical: '/',
+    canonical: 'https://associazionecalico.it',
   },
 
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 
   manifest: '/manifest.webmanifest',
