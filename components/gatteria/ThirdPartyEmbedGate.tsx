@@ -65,8 +65,9 @@ export default function ThirdPartyEmbedGate({
         <div className="mt-4 h-2 w-24 bg-[#E4B15A]" />
 
         <p className="mt-6 text-sm leading-6 text-gray-700 md:text-[15px]">
-          Questo contenuto è fornito da una piattaforma esterna e può utilizzare
-          cookie propri solo dopo la tua scelta.
+          Questa diretta è fornita da una piattaforma esterna collegata a
+          CatLives e può comportare il caricamento di contenuti e dati tecnici
+          solo dopo il tuo consenso.
         </p>
 
         <div className="mt-4 flex items-start gap-3 rounded-2xl border border-[#E4B15A]/40 bg-[#FDF6E8] p-4">

@@ -30,23 +30,32 @@ export default function Footer() {
           </div>
 
           {/* LINK UTILI */}
-          <div>
-            <h4 className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-[#E4B15A]">
-              Link utili
-            </h4>
+          {/* LINK LEGALI */}
+<div>
+  <h4 className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-[#E4B15A]">
+    Informazioni
+  </h4>
 
-            <ul className="space-y-2 text-sm">
-              <li><Link href="/adozioni" className="hover:text-[#E4B15A]">Adozioni gatti</Link></li>
-              <li><Link href="/cani" className="hover:text-[#E4B15A]">Adozioni cani</Link></li>
-              <li><Link href="/gatteria" className="hover:text-[#E4B15A]">La Gatteria</Link></li>
-              <li><Link href="/conigli" className="hover:text-[#E4B15A]">Conigli</Link></li>
-              <li><Link href="/consigli" className="hover:text-[#E4B15A]">Consigli</Link></li>
-              <li><Link href="/sostienici" className="hover:text-[#E4B15A]">Sostienici</Link></li>
-              <li><Link href="/diventa-volontario" className="hover:text-[#E4B15A]">Volontariato</Link></li>
-              <li><Link href="/chi-siamo" className="hover:text-[#E4B15A]">Chi siamo</Link></li>
-              <li><Link href="/privacy-policy">Privacy Policy</Link></li>
-            </ul>
-          </div>
+  <ul className="space-y-3 text-sm">
+    <li>
+      <Link
+        href="/privacy-policy"
+        className="transition hover:text-[#E4B15A]"
+      >
+        Privacy Policy & Cookies
+      </Link>
+    </li>
+
+    <li>
+      <Link
+        href="/chi-siamo#trasparenza"
+        className="transition hover:text-[#E4B15A]"
+      >
+        Trasparenza
+      </Link>
+    </li>
+  </ul>
+</div>
 
           {/* CONTATTI */}
           <div>

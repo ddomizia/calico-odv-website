@@ -1,6 +1,7 @@
 'use client'
 
-import { Cookie, ShieldCheck, X } from 'lucide-react'
+import Link from 'next/link'
+import { Cookie, ShieldCheck, MonitorPlay, X } from 'lucide-react'
 
 export default function CookiePreferencesModal({
   isOpen,
@@ -24,7 +25,7 @@ export default function CookiePreferencesModal({
         onClick={onClose}
       />
 
-      <div className="fixed left-1/2 top-1/2 z-[130] w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 -translate-y-1/2 border border-[#e8dcc7] bg-[#FCFBF8] shadow-[0_25px_80px_rgba(0,0,0,0.18)]">
+      <div className="fixed left-1/2 top-1/2 z-[130] w-[calc(100%-2rem)] max-w-3xl -translate-x-1/2 -translate-y-1/2 border border-[#e8dcc7] bg-[#FCFBF8] shadow-[0_25px_80px_rgba(0,0,0,0.18)]">
         <div className="flex items-center justify-between border-b border-[#e8dcc7] px-6 py-5">
           <div className="flex items-center gap-3">
             <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#E4B15A]/20 text-black">
@@ -53,9 +54,20 @@ export default function CookiePreferencesModal({
 
         <div className="space-y-6 px-6 py-6">
           <p className="text-sm leading-6 text-gray-700 md:text-[15px]">
-            Rispettiamo la tua privacy. Puoi scegliere come gestire i contenuti
-            di terze parti presenti sul sito. I cookie necessari restano sempre
-            attivi perché indispensabili al corretto funzionamento.
+            Il sito utilizza cookie tecnici necessari al funzionamento. Alcune
+            pagine possono includere contenuti esterni, come la diretta video
+            della Gatteria tramite CatLives. Questi contenuti vengono caricati
+            solo dopo il consenso e possono comportare la raccolta di dati
+            tecnici da parte delle piattaforme esterne, secondo le rispettive
+            informative sulla privacy. Per maggiori dettagli puoi consultare la
+            nostra{' '}
+            <Link
+              href="/privacy-policy"
+              className="font-semibold text-black underline underline-offset-2"
+            >
+              Informativa sulla Privacy e Cookie
+            </Link>
+            .
           </p>
 
           <div className="border border-[#e8dcc7] bg-white p-5">
@@ -70,7 +82,9 @@ export default function CookiePreferencesModal({
 
                 <p className="mt-3 text-sm leading-6 text-gray-700">
                   Questi cookie sono necessari per il corretto funzionamento del
-                  sito web e non possono essere disattivati.
+                  sito web e non possono essere disattivati. Servono, ad esempio,
+                  a memorizzare le preferenze privacy e a garantire le funzioni
+                  tecniche essenziali del sito.
                 </p>
               </div>
 
@@ -84,16 +98,19 @@ export default function CookiePreferencesModal({
             <div className="flex items-start justify-between gap-4">
               <div className="max-w-xl">
                 <div className="flex items-center gap-2">
-                  <Cookie size={18} className="text-[#C96B3C]" />
+                  <MonitorPlay size={18} className="text-[#C96B3C]" />
                   <h3 className="text-lg font-bold text-black">
                     Contenuti di terze parti
                   </h3>
                 </div>
 
                 <p className="mt-3 text-sm leading-6 text-gray-700">
-                  I contenuti incorporati da piattaforme esterne, come ad
-                  esempio la diretta CatLives, possono utilizzare cookie propri
-                  e raccogliere dati solo dopo la tua interazione.
+                  Questo sito può includere contenuti incorporati da piattaforme
+                  esterne, come la diretta video della Gatteria tramite
+                  CatLives. Questi contenuti non vengono caricati automaticamente,
+                  ma solo dopo il tuo consenso. Tali servizi possono raccogliere
+                  dati tecnici, come indirizzo IP, informazioni sul dispositivo e
+                  dati di utilizzo, secondo le proprie informative sulla privacy.
                 </p>
               </div>
 
@@ -115,22 +132,31 @@ export default function CookiePreferencesModal({
             </div>
           </div>
 
-          <div className="flex flex-col gap-3 border-t border-[#e8dcc7] pt-6 sm:flex-row sm:justify-end">
-            <button
-              type="button"
-              onClick={onClose}
-              className="inline-flex justify-center border border-black/10 bg-white px-5 py-3 text-sm font-bold uppercase tracking-wide text-black transition hover:bg-[#F3E6CC]"
+          <div className="flex flex-col gap-3 border-t border-[#e8dcc7] pt-6 sm:flex-row sm:justify-between sm:items-center">
+            <Link
+              href="/privacy-policy"
+              className="text-sm font-semibold text-black underline underline-offset-2"
             >
-              Annulla
-            </button>
+              Leggi l’informativa completa
+            </Link>
 
-            <button
-              type="button"
-              onClick={onSave}
-              className="inline-flex justify-center bg-[#1F3B2D] px-5 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:opacity-90"
-            >
-              Salva preferenze
-            </button>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <button
+                type="button"
+                onClick={onClose}
+                className="inline-flex justify-center border border-black/10 bg-white px-5 py-3 text-sm font-bold uppercase tracking-wide text-black transition hover:bg-[#F3E6CC]"
+              >
+                Annulla
+              </button>
+
+              <button
+                type="button"
+                onClick={onSave}
+                className="inline-flex justify-center bg-[#1F3B2D] px-5 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:opacity-90"
+              >
+                Salva preferenze
+              </button>
+            </div>
           </div>
         </div>
       </div>

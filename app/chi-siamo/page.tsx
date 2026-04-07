@@ -82,7 +82,7 @@ function TransparencyLink({
   label: string
 }) {
   return (
-    <Link
+    <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
@@ -90,7 +90,7 @@ function TransparencyLink({
     >
       <FileText size={16} className="text-[#C96B3C]" />
       <span>{label}</span>
-    </Link>
+    </a>
   )
 }
 
@@ -371,7 +371,7 @@ export default function ChiSiamoPage() {
         </div>
       </section>
 
-      <section className="w-full bg-white">
+      <section id="trasparenza" className="w-full bg-white scroll-mt-24">
         <div className="mx-auto max-w-7xl px-6 py-12 sm:py-14 md:py-16">
           <div className="overflow-hidden border border-black/10 bg-[#FCFBF8]">
             <div className="grid gap-0 md:grid-cols-[1fr_1.1fr]">
@@ -391,34 +391,35 @@ export default function ChiSiamoPage() {
                 <p className="mt-4 max-w-2xl text-sm leading-6 text-white/90 md:text-[15px]">
                   Associazione Calico ODV è nata nel 2021. In questa sezione puoi
                   consultare i documenti di trasparenza dell’associazione, con i
-                  riferimenti ai bilanci annuali e alla rendicontazione del 5x1000.
+                  riferimenti ai bilanci annuali e alla rendicontazione del
+                  5x1000.
                 </p>
               </div>
 
               <div className="p-5 sm:p-6 md:p-10">
                 <div className="grid gap-3 sm:grid-cols-2">
                   <TransparencyLink
-                    href="/trasparenza/bilancio-2021.pdf"
+                    href="/calico-bilancio-2021.pdf"
                     label="Bilancio 2021"
                   />
                   <TransparencyLink
-                    href="/trasparenza/bilancio-2022.pdf"
+                    href="/calico-bilancio-2022.pdf"
                     label="Bilancio 2022"
                   />
                   <TransparencyLink
-                    href="/trasparenza/bilancio-2023.pdf"
+                    href="/calico-bilancio-2023.pdf"
                     label="Bilancio 2023"
                   />
                   <TransparencyLink
-                    href="/trasparenza/bilancio-2024.pdf"
+                    href="/calico-bilancio-2024.pdf"
                     label="Bilancio 2024"
                   />
                   <TransparencyLink
-                    href="/trasparenza/bilancio-2025.pdf"
+                    href="/calico-bilancio-2025.pdf"
                     label="Bilancio 2025"
                   />
                   <TransparencyLink
-                    href="/trasparenza/rendicontazione-5x1000.pdf"
+                    href="/calico-5x1000.pdf"
                     label="Rendicontazione 5x1000"
                   />
                 </div>
@@ -442,10 +443,10 @@ export default function ChiSiamoPage() {
             <div className="mt-4 h-2 w-28 bg-[#E4B15A]" />
 
             <p className="mt-6 max-w-3xl text-sm leading-6 text-gray-700 md:text-[15px]">
-              Ogni pagina del sito racconta una parte concreta del nostro impegno:
-              gli animali accolti, gli spazi che curiamo, le attività che
-              organizziamo e i modi in cui chi ci incontra può diventare parte di
-              questo percorso.
+              Ogni pagina del sito racconta una parte concreta del nostro
+              impegno: gli animali accolti, gli spazi che curiamo, le attività
+              che organizziamo e i modi in cui chi ci incontra può diventare
+              parte di questo percorso.
             </p>
           </div>
 

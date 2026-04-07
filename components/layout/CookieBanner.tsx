@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { Cookie } from 'lucide-react'
 import CookiePreferencesModal from '@/components/layout/CookiePreferencesModal'
@@ -55,17 +56,17 @@ export default function CookieBanner() {
               </span>
 
               <p className="max-w-3xl text-sm leading-6 text-gray-700 md:text-[15px]">
-                Utilizziamo i cookie sul nostro sito per migliorare la tua
-                esperienza di navigazione. Alcuni contenuti esterni, come la
-                diretta CatLives, possono essere visualizzati solo dopo il tuo
-                consenso. Per maggiori informazioni, consulta la nostra{' '}
-                <a
+                Questo sito utilizza esclusivamente cookie tecnici necessari al
+                funzionamento. Alcune pagine possono includere contenuti di terze
+                parti, come la diretta video della Gatteria tramite CatLives,
+                attivati solo previo consenso. Per maggiori informazioni,
+                consulta la nostra{' '}
+                <Link
                   href="/privacy-policy"
-                  target="_blank"
                   className="font-semibold text-black underline underline-offset-2"
                 >
                   Informativa sulla Privacy e Cookie
-                </a>
+                </Link>
                 .
               </p>
             </div>
@@ -84,7 +85,7 @@ export default function CookieBanner() {
                 onClick={() => acceptNecessaryOnly()}
                 className="inline-flex justify-center border border-[#E4B15A] bg-transparent px-4 py-3 text-sm font-bold uppercase tracking-wide text-black transition hover:bg-[#F3E6CC]"
               >
-                Solo necessari
+                Rifiuta contenuti esterni
               </button>
 
               <button
