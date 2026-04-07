@@ -1,11 +1,9 @@
-'use client'
-
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import { FaPaypal, FaWhatsapp, FaInstagram, FaFacebookF } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 import { Check, X } from 'lucide-react'
 import StatsStrip from '@/components/home/StatsStrip'
-import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Sostienici',
@@ -13,6 +11,21 @@ export const metadata: Metadata = {
     'Scopri come sostenere Associazione Calico ODV con donazioni, 5x1000 e aiuti concreti per gli animali in difficoltà.',
   alternates: {
     canonical: '/sostienici',
+  },
+  openGraph: {
+    title: 'Sostienici | Associazione Calico ODV',
+    description:
+      'Scopri come sostenere Associazione Calico ODV con donazioni, 5x1000 e aiuti concreti per gli animali in difficoltà.',
+    url: 'https://associazionecalico.it/sostienici',
+    type: 'website',
+    images: [
+      {
+        url: '/home-hero.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Sostieni Associazione Calico ODV',
+      },
+    ],
   },
 }
 
