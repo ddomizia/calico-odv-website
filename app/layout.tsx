@@ -4,6 +4,7 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import ScrollToTop from '@/components/layout/ScrollToTop'
 import LayoutPageOffset from '@/components/layout/LayoutPageOffset'
+import CookieBannerLoader from '@/components/layout/CookieBannerLoader'
 
 export const metadata: Metadata = {
   title: 'Associazione Calico ODV',
@@ -27,11 +28,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it">
+      <head>
+        <link
+          rel="stylesheet"
+          id="silktide-consent-manager-css"
+          href="/cookie-banner/silktide-consent-manager.css"
+        />
+      </head>
       <body>
         <Navbar />
         <LayoutPageOffset>{children}</LayoutPageOffset>
         <Footer />
         <ScrollToTop />
+        <CookieBannerLoader />
       </body>
     </html>
   )

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import ThirdPartyEmbedGate from '@/components/gatteria/ThirdPartyEmbedGate'
 
 export default function GatteriaPage() {
   return (
@@ -114,19 +115,22 @@ export default function GatteriaPage() {
               </div>
             </div>
 
-            <div className="relative min-h-[260px] bg-black sm:min-h-[320px] md:min-h-[340px]">
-              <iframe
-                loading="lazy"
-                src="https://services.skylinewebcams.com/?w=228001"
-                className="absolute inset-0 h-full w-full"
-                frameBorder="0"
-                scrolling="no"
-                marginWidth={0}
-                marginHeight={0}
-                allow="autoplay; fullscreen"
-                allowFullScreen
-              />
-            </div>
+            <ThirdPartyEmbedGate title="Diretta CatLives">
+              <div className="relative min-h-[260px] bg-black sm:min-h-[320px] md:min-h-[340px]">
+                <iframe
+                  loading="lazy"
+                  src="https://services.skylinewebcams.com/?w=228001"
+                  className="absolute inset-0 h-full w-full"
+                  frameBorder="0"
+                  scrolling="no"
+                  marginWidth={0}
+                  marginHeight={0}
+                  allow="autoplay; fullscreen"
+                  allowFullScreen
+                  title="Diretta CatLives - La Gatteria"
+                />
+              </div>
+            </ThirdPartyEmbedGate>
           </div>
 
           <div className="grid grid-cols-1 overflow-hidden md:min-h-[340px] md:grid-cols-2">
@@ -175,7 +179,9 @@ export default function GatteriaPage() {
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#E4B15A]">
               Dove
             </p>
-            <h3 className="mt-3 text-xl font-bold text-black md:text-2xl">Nepi (VT)</h3>
+            <h3 className="mt-3 text-xl font-bold text-black md:text-2xl">
+              Nepi (VT)
+            </h3>
             <p className="mt-3 text-sm leading-6 text-gray-700">
               La Gatteria si trova in Via di Corte 5, nel centro di Nepi.
             </p>
@@ -185,7 +191,9 @@ export default function GatteriaPage() {
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#E4B15A]">
               Contatti
             </p>
-            <h3 className="mt-3 text-xl font-bold text-black md:text-2xl">Parla con noi</h3>
+            <h3 className="mt-3 text-xl font-bold text-black md:text-2xl">
+              Parla con noi
+            </h3>
             <p className="mt-3 text-sm leading-6 text-gray-700">
               Per informazioni sulla struttura o sui mici ospiti puoi contattarci
               direttamente e ti aiuteremo volentieri.
