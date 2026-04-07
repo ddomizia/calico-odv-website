@@ -44,6 +44,7 @@ export default function Footer() {
               <li><Link href="/sostienici" className="hover:text-[#E4B15A]">Sostienici</Link></li>
               <li><Link href="/diventa-volontario" className="hover:text-[#E4B15A]">Volontariato</Link></li>
               <li><Link href="/chi-siamo" className="hover:text-[#E4B15A]">Chi siamo</Link></li>
+              <li><Link href="/privacy-policy">Privacy Policy</Link></li>
             </ul>
           </div>
 
