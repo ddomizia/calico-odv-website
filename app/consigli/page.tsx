@@ -19,6 +19,16 @@ import {
   Stethoscope,
   X,
 } from 'lucide-react'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Consigli',
+  description:
+    'Approfondimenti, consigli pratici e contenuti utili sull’adozione e sulla cura quotidiana degli animali.',
+  alternates: {
+    canonical: '/consigli',
+  },
+}
 
 type AdviceCard = {
   id: string

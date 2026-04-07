@@ -10,6 +10,13 @@ import {
 } from 'lucide-react'
 import StatsStrip from '@/components/home/StatsStrip'
 import ScrollDownButton from '../components/home/ScrollDownButton'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Home',
+  description:
+    'Associazione Calico ODV si occupa di recupero, cura e adozione consapevole di animali in difficoltà tra Roma e Nepi.',
+}
 
 type FancyButtonProps = {
   href: string

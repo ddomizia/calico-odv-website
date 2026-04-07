@@ -5,6 +5,16 @@ import { FaPaypal, FaWhatsapp, FaInstagram, FaFacebookF } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 import { Check, X } from 'lucide-react'
 import StatsStrip from '@/components/home/StatsStrip'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Sostienici',
+  description:
+    'Scopri come sostenere Associazione Calico ODV con donazioni, 5x1000 e aiuti concreti per gli animali in difficoltà.',
+  alternates: {
+    canonical: '/sostienici',
+  },
+}
 
 function SupportBlock({
   title,

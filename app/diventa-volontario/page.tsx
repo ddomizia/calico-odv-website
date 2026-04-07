@@ -1,6 +1,16 @@
 import Image from 'next/image'
 import { FaWhatsapp, FaInstagram, FaFacebookF } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Diventa volontario',
+  description:
+    'Unisciti ad Associazione Calico ODV e scopri come dare una mano concreta agli animali in difficoltà.',
+  alternates: {
+    canonical: '/diventa-volontario',
+  },
+}
 
 function VolunteerBlock({
   title,

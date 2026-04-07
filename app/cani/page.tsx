@@ -5,6 +5,16 @@ import { MdEmail } from 'react-icons/md'
 import { client } from '../../sanity/lib/client'
 import { allDogsQuery } from '../../sanity/lib/queries'
 import { urlFor } from '../../sanity/lib/image'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Adozioni cani',
+  description:
+    'Scopri i cani in adozione seguiti da Associazione Calico ODV e i percorsi di adozione consapevole.',
+  alternates: {
+    canonical: '/cani',
+  },
+}
 
 type Dog = {
   _id: string

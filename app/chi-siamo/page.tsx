@@ -17,6 +17,16 @@ import {
 } from 'lucide-react'
 import { FaWhatsapp, FaInstagram, FaFacebookF } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Chi siamo',
+  description:
+    'Scopri la storia, i progetti e l’impegno quotidiano di Associazione Calico ODV tra Nepi, Roma e il Lazio.',
+  alternates: {
+    canonical: '/chi-siamo',
+  },
+}
 
 type ProjectCardProps = {
   title: string

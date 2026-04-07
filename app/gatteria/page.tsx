@@ -1,6 +1,16 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import ThirdPartyEmbedGate from '@/components/gatteria/ThirdPartyEmbedGate'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'La Gatteria',
+  description:
+    'La Gatteria di Associazione Calico ODV a Nepi: uno spazio sicuro per gatti abbandonati, fragili o in attesa di adozione.',
+  alternates: {
+    canonical: '/gatteria',
+  },
+}
 
 export default function GatteriaPage() {
   return (

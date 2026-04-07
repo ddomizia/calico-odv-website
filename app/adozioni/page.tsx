@@ -5,6 +5,16 @@ import { client } from '../../sanity/lib/client'
 import { availableCatsQuery } from '../../sanity/lib/queries'
 import { urlFor } from '../../sanity/lib/image'
 import CatsAdoptionBrowser from '../adozioni/CatsAdoptionBrowser'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Adozioni gatti',
+  description:
+    'Scopri i gatti in adozione seguiti da Associazione Calico ODV tra Roma, Nepi e il Lazio.',
+  alternates: {
+    canonical: '/adozioni',
+  },
+}
 
 export type Animal = {
   _id: string

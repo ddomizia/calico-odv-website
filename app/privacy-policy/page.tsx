@@ -15,6 +15,16 @@ import {
   MonitorPlay,
   ScrollText,
 } from 'lucide-react'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy e Cookie',
+  description:
+    'Informativa sulla Privacy e Cookie Policy di Associazione Calico ODV.',
+  alternates: {
+    canonical: '/privacy-policy',
+  },
+}
 
 function PolicySection({
   icon: Icon,
