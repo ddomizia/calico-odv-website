@@ -2,7 +2,14 @@ import Image from 'next/image'
 import { client } from '../../sanity/lib/client'
 import { allEventsQuery } from '../../sanity/lib/queries'
 import { urlFor } from '../../sanity/lib/image'
-import { Calendar, Clock, MapPin, Info } from 'lucide-react'
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Info,
+  ArrowUpRight,
+} from 'lucide-react'
+import { FaWhatsapp } from 'react-icons/fa'
 
 type EventItem = {
   _id: string
@@ -26,6 +33,25 @@ function formatItalianDate(dateString?: string) {
   }).format(date)
 }
 
+function buildWhatsAppShareUrl(event: EventItem) {
+  const eventUrl = `https://associazionecalico.it/attivita#event-${event._id}`
+
+  const parts = [
+    `Ti condivido questo evento di Associazione Calico ODV 🐾`,
+    event.title,
+    event.date ? `Data: ${formatItalianDate(event.date)}` : '',
+    event.time ? `Orario: ${event.time}` : '',
+    event.location
+      ? `Luogo: ${event.location}${event.street ? `, ${event.street}` : ''}`
+      : event.street
+        ? `Luogo: ${event.street}`
+        : '',
+    eventUrl,
+  ].filter(Boolean)
+
+  return `https://wa.me/?text=${encodeURIComponent(parts.join('\n'))}`
+}
+
 function EventCard({
   event,
   isPast,
@@ -33,13 +59,26 @@ function EventCard({
   event: EventItem & { imageUrl?: string }
   isPast?: boolean
 }) {
+  const shareUrl = buildWhatsAppShareUrl(event)
+
   return (
-    <article className="overflow-hidden border border-gray-200 bg-white transition hover:shadow-md">
+    <article
+      id={`event-${event._id}`}
+      className={`group overflow-hidden border border-black/10 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)] ${
+        isPast ? 'opacity-[0.96]' : ''
+      }`}
+    >
       <div className="relative h-64 bg-[#F6F1E7] sm:h-72">
-        {isPast && (
+        {isPast ? (
           <div className="absolute left-3 top-3 z-10">
             <span className="inline-flex items-center bg-[#C96B3C] px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.12em] text-white shadow-md">
               ✓ Evento concluso
+            </span>
+          </div>
+        ) : (
+          <div className="absolute left-3 top-3 z-10">
+            <span className="inline-flex items-center bg-[#1F3B2D] px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.12em] text-white shadow-md">
+              Prossimo evento
             </span>
           </div>
         )}
@@ -49,7 +88,7 @@ function EventCard({
             src={event.imageUrl}
             alt={event.title}
             fill
-            className="object-contain"
+            className="object-contain transition duration-300 group-hover:scale-[1.01]"
           />
         ) : (
           <div className="flex h-full items-center justify-center px-4 text-center text-gray-400">
@@ -58,12 +97,12 @@ function EventCard({
         )}
       </div>
 
-      <div className="p-4 sm:p-5">
-        <h3 className="text-xl font-bold leading-tight text-black sm:text-2xl">
+      <div className="p-5 sm:p-6">
+        <h3 className="text-xl font-black leading-tight text-black sm:text-2xl">
           {event.title}
         </h3>
 
-        <div className="mt-4 space-y-3 text-sm leading-6 text-gray-700">
+        <div className="mt-5 space-y-3 text-sm leading-6 text-gray-700">
           {event.date && (
             <div className="flex items-center gap-2">
               <Calendar size={16} className="shrink-0 text-[#E4B15A]" />
@@ -95,20 +134,59 @@ function EventCard({
             </div>
           )}
         </div>
+
+        <div className="mt-6 border-t border-black/10 pt-5">
+          <a
+            href={shareUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Condividi l'evento ${event.title} su WhatsApp`}
+            className="block transition hover:opacity-90"
+          >
+            <span className="inline-flex items-center justify-center rounded-full bg-[#25D366] p-3 text-white sm:hidden">
+              <FaWhatsapp size={20} />
+            </span>
+
+            <div className="hidden items-center justify-between border border-[#25D366]/20 bg-[#25D366]/10 px-4 py-3 sm:flex">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#25D366] text-white">
+                  <FaWhatsapp size={20} />
+                </span>
+
+                <p className="text-sm font-bold text-[#1F3B2D]">
+                  Condividi questo evento su WhatsApp
+                </p>
+              </div>
+
+              <span className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-sm font-bold text-white">
+                Condividi
+                <ArrowUpRight size={16} />
+              </span>
+            </div>
+          </a>
+        </div>
       </div>
     </article>
   )
 }
 
 function SectionTitle({
+  eyebrow,
   first,
   second,
 }: {
+  eyebrow?: string
   first: string
   second: string
 }) {
   return (
-    <div className="mb-6 md:mb-7">
+    <div className="mb-7 md:mb-8">
+      {eyebrow && (
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#C96B3C]">
+          {eyebrow}
+        </p>
+      )}
+
       <h2 className="text-2xl font-black uppercase tracking-tight sm:text-3xl md:text-4xl">
         <span className="text-black">{first} </span>
         <span className="text-[#E4B15A]">{second}</span>
@@ -148,7 +226,7 @@ export default async function AttivitaPage() {
 
   return (
     <main className="min-h-screen bg-[#FCFBF8]">
-      <section className="relative min-h-[380px] overflow-hidden sm:min-h-[420px] md:min-h-[460px]">
+      <section className="relative min-h-[400px] overflow-hidden sm:min-h-[440px] md:min-h-[500px]">
         <Image
           src="/home-hero.jpg"
           alt="Attività Associazione Calico ODV"
@@ -159,8 +237,12 @@ export default async function AttivitaPage() {
 
         <div className="absolute inset-0 bg-black/50" />
 
-        <div className="relative z-10 mx-auto flex min-h-[380px] max-w-7xl items-center px-6 py-14 sm:min-h-[420px] md:min-h-[460px] md:py-16">
-          <div className="max-w-4xl">
+        <div className="relative z-10 mx-auto flex min-h-[400px] max-w-7xl items-center px-6 py-14 sm:min-h-[440px] md:min-h-[500px] md:py-16">
+          <div className="max-w-5xl">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-[#E4B15A]">
+              Associazione Calico ODV
+            </p>
+
             <h1 className="text-4xl font-black uppercase leading-none tracking-tight sm:text-5xl md:text-7xl">
               <span className="text-white">Atti</span>
               <span className="text-[#E4B15A]">vità</span>
@@ -168,15 +250,15 @@ export default async function AttivitaPage() {
 
             <div className="mt-6 max-w-3xl bg-white/10 px-4 py-4 backdrop-blur-sm sm:mt-8 sm:px-5">
               <p className="text-sm leading-6 text-white md:text-[15px]">
-                L’associazione organizza mercatini solidali, raccolte fondi ed
-                eventi di sensibilizzazione per sostenere concretamente i nostri
-                animali e far conoscere il nostro lavoro.
+                L’associazione organizza mercatini solidali, raccolte fondi,
+                giornate di sensibilizzazione e iniziative utili a sostenere
+                concretamente gli animali che seguiamo.
               </p>
 
               <p className="mt-4 text-sm leading-6 text-white md:text-[15px]">
-                Promuoviamo anche passeggiate, visite veterinarie gratuite e
-                campagne di educazione rivolte alla comunità, con l’obiettivo di
-                diffondere maggiore consapevolezza sul benessere animale.
+                In questa pagina trovi gli appuntamenti futuri e una memoria
+                delle attività passate: eventi che raccontano il nostro lavoro e
+                che puoi anche condividere facilmente su WhatsApp.
               </p>
             </div>
           </div>
@@ -185,8 +267,12 @@ export default async function AttivitaPage() {
 
       <section className="mx-auto max-w-7xl px-6 py-10 md:py-14">
         {futureEvents.length > 0 && (
-          <section className="mb-12 md:mb-16">
-            <SectionTitle first="Eventi" second="futuri" />
+          <section className="mb-14 md:mb-16">
+            <SectionTitle
+              eyebrow="Partecipa con noi"
+              first="Eventi"
+              second="futuri"
+            />
 
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {futureEvents.map((event) => (
@@ -198,7 +284,11 @@ export default async function AttivitaPage() {
 
         {pastEvents.length > 0 && (
           <section>
-            <SectionTitle first="Eventi" second="passati" />
+            <SectionTitle
+              eyebrow="Le attività svolte"
+              first="Eventi"
+              second="passati"
+            />
 
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {pastEvents.map((event) => (
@@ -209,9 +299,10 @@ export default async function AttivitaPage() {
         )}
 
         {futureEvents.length === 0 && pastEvents.length === 0 && (
-          <div className="border border-gray-200 bg-white p-6 md:p-8">
-            <p className="text-sm leading-6 text-gray-700">
-              Non ci sono ancora eventi pubblicati.
+          <div className="border border-black/10 bg-white p-6 md:p-8">
+            <p className="text-sm leading-6 text-gray-700 md:text-[15px]">
+              Non ci sono ancora eventi pubblicati. Torna presto per scoprire i
+              prossimi appuntamenti dell’associazione.
             </p>
           </div>
         )}
