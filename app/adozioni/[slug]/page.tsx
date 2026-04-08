@@ -433,6 +433,12 @@ export default async function AnimalPage({
   const hasDogExtraContent =
     animal.species === 'dog' && extraInfoItems.length > 0
 
+  const basePath = animal.species === 'dog' ? '/cani' : '/adozioni'
+  const animalUrl = `https://associazionecalico.it${basePath}/${animal.slug?.current ?? slug}`
+  const whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(
+    `Guarda questo gatto in adozione 🐱❤️ ${animalUrl}`
+  )}`
+
   return (
     <main className="min-h-screen bg-white">
       <section className="mx-auto max-w-6xl px-6 py-10">
@@ -607,7 +613,7 @@ export default async function AnimalPage({
 
               <div className="flex items-center gap-5">
                 <a
-                  href="https://wa.me/39XXXXXXXXXX"
+                  href="https://wa.me/39393501334"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp"
@@ -617,7 +623,7 @@ export default async function AnimalPage({
                 </a>
 
                 <a
-                  href="https://instagram.com/tuo_profilo"
+                  href="https://www.instagram.com/associazionecalico"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
@@ -627,7 +633,7 @@ export default async function AnimalPage({
                 </a>
 
                 <a
-                  href="https://facebook.com/tuapagina"
+                  href="https://www.facebook.com/associazionecalico/?locale=it_IT"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
@@ -637,7 +643,7 @@ export default async function AnimalPage({
                 </a>
 
                 <a
-                  href="mailto:info@calicoodv.it"
+                  href="mailto:calicoassociazione@gmail.com"
                   aria-label="Email"
                   className="text-black transition hover:opacity-80"
                 >
@@ -654,6 +660,37 @@ export default async function AnimalPage({
                     className="inline-flex bg-[#E4B15A] px-5 py-3 text-sm font-bold text-black transition hover:opacity-90"
                   >
                     Adotta tramite Empethy
+                  </a>
+                </div>
+              )}
+
+              {animal.species === 'cat' && (
+                <div className="mt-4 border border-[#25D366]/20 bg-[#25D366]/10 p-4 sm:p-5">
+                  <a
+                    href={whatsappShareUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Condividi ${animal.name} su WhatsApp`}
+                    className="flex flex-col gap-4 transition hover:opacity-90 sm:flex-row sm:items-center sm:justify-between"
+                  >
+                    <div className="flex items-start gap-3">
+                      <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white">
+                        <FaWhatsapp size={22} />
+                      </span>
+
+                      <div>
+                        <p className="text-sm font-black uppercase tracking-wide text-[#1F3B2D]">
+                          Condividi adozione
+                        </p>
+                        <p className="mt-1 text-sm leading-6 text-black sm:text-[15px]">
+                          Condividi questo gatto in adozione 🐱❤️
+                        </p>
+                      </div>
+                    </div>
+
+                    <span className="inline-flex items-center justify-center bg-[#25D366] px-4 py-3 text-sm font-bold text-white sm:shrink-0">
+                      Condividi su WhatsApp
+                    </span>
                   </a>
                 </div>
               )}
