@@ -24,6 +24,70 @@ import { MdEmail } from 'react-icons/md'
 import { client } from '../../../sanity/lib/client'
 import { urlFor } from '../../../sanity/lib/image'
 import { animalBySlugQuery } from '../../../sanity/lib/queries'
+import type { Metadata } from 'next'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+
+  const animal = await client.fetch<Animal | null>(animalBySlugQuery, { slug })
+
+  if (!animal) {
+    return {
+      title: 'Adozione',
+      description: 'Scheda adozione Associazione Calico ODV',
+    }
+  }
+
+  const basePath = animal.species === 'dog' ? '/cani' : '/adozioni'
+  const pageUrl = `https://associazionecalico.it${basePath}/${animal.slug?.current ?? slug}`
+
+  const ogImage = animal.image
+    ? urlFor(animal.image).width(1200).height(630).fit('crop').url()
+    : 'https://associazionecalico.it/home-hero.jpg'
+
+  const title =
+    animal.species === 'dog'
+      ? `${animal.name} | Cane in adozione`
+      : `${animal.name} | Gatto in adozione`
+
+  const description = animal.description
+    ? animal.description.slice(0, 160)
+    : animal.species === 'dog'
+    ? `Scopri ${animal.name}, cane in adozione seguito da Associazione Calico ODV.`
+    : `Scopri ${animal.name}, gatto in adozione seguito da Associazione Calico ODV.`
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: pageUrl,
+    },
+    openGraph: {
+      title,
+      description,
+      url: pageUrl,
+      type: 'article',
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: animal.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
+  }
+}
 
 type Animal = {
   _id: string
