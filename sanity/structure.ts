@@ -1,7 +1,19 @@
 import type {StructureResolver} from 'sanity/structure'
+import {CalendarDays, PawPrint} from 'lucide-react'
 
-// https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
   S.list()
-    .title('Content')
-    .items(S.documentTypeListItems())
+    .title('Contenuti')
+    .items([
+      S.documentTypeListItem('animal')
+        .title('Animali')
+        .icon(PawPrint),
+
+      S.documentTypeListItem('event')
+        .title('Eventi')
+        .icon(CalendarDays),
+
+      ...S.documentTypeListItems().filter(
+        (item) => !['animal', 'event'].includes(item.getId() || '')
+      ),
+    ])

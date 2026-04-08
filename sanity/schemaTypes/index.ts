@@ -1,4 +1,4 @@
-import {animal} from './animal'
+import { animal } from './animal'
 import { event } from './event'
 
 export const schema = {

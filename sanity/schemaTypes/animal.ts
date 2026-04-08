@@ -433,4 +433,25 @@ export const animal = defineType({
       },
     }),
   ],
+    preview: {
+    select: {
+      title: 'name',
+      subtitle: 'species',
+      media: 'image',
+      adoptionStatus: 'adoptionStatus',
+    },
+    prepare({title, subtitle, media, adoptionStatus}) {
+      const speciesLabel =
+        subtitle === 'dog' ? 'Cane' : subtitle === 'cat' ? 'Gatto' : 'Animale'
+
+      const statusLabel =
+        adoptionStatus === 'adopted' ? 'Adottato' : 'Disponibile'
+
+      return {
+        title,
+        subtitle: `${speciesLabel} · ${statusLabel}`,
+        media,
+      }
+    },
+  },
 })

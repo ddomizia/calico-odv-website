@@ -13,6 +13,17 @@ export const event = defineType({
     }),
 
     defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
       name: 'date',
       title: 'Data',
       type: 'date',
@@ -50,6 +61,14 @@ export const event = defineType({
     }),
 
     defineField({
+      name: 'excerpt',
+      title: 'Testo breve',
+      type: 'text',
+      rows: 3,
+      description: 'Breve descrizione da mostrare nella card evento',
+    }),
+
+    defineField({
       name: 'poster',
       title: 'Foto locandina',
       type: 'image',
@@ -58,4 +77,20 @@ export const event = defineType({
       },
     }),
   ],
+
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'date',
+      media: 'poster',
+      location: 'location',
+    },
+    prepare({ title, subtitle, media, location }) {
+      return {
+        title,
+        subtitle: location ? `${subtitle} · ${location}` : subtitle,
+        media,
+      }
+    },
+  },
 })
